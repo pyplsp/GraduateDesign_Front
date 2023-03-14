@@ -11,33 +11,33 @@
                     text-color="#fff"
                     active-text-color="#ffd04b">
                     <el-menu-item index="1">
-                        <span class="iconfont icon-dianti"></span>&nbsp;
+                        <span class="iconfont icon-dianti"></span>
                         <span slot="title">电梯档案</span>
                     </el-menu-item>
                     <el-submenu index="2">
                         <template slot="title">
-                            <span class="iconfont icon-jingbao"></span>&nbsp;
+                            <span class="iconfont icon-jingbao"></span>
                             <span>告警</span>
                         </template>
                         <el-menu-item index="2-1">
-                            <span class="iconfont icon-winfo-icon-quyusaomiao"></span>&nbsp;
+                            <span class="iconfont icon-winfo-icon-quyusaomiao"></span>
                             <span slot="title">实时告警</span>
                         </el-menu-item>
                         <el-menu-item index="2-2">
-                            <span class="iconfont icon-shijian"></span>&nbsp;
+                            <span class="iconfont icon-shijian"></span>
                             <span slot="title">告警记录</span>
                         </el-menu-item>
                     </el-submenu>
                     <el-menu-item index="3">
-                        <span class="iconfont icon-ditu"></span>&nbsp;
+                        <span class="iconfont icon-ditu"></span>
                         <span slot="title">位置分布</span>
                     </el-menu-item>
                     <el-menu-item index="4">
-                        <span class="iconfont icon-miehuoqi"></span>&nbsp;
+                        <span class="iconfont icon-miehuoqi"></span>
                         <span slot="title">救援信息</span>
                     </el-menu-item>
                     <el-menu-item index="5">
-                        <span class="iconfont icon-shezhi"></span>&nbsp;
+                        <span class="iconfont icon-shezhi"></span>
                         <span slot="title">设置</span>
                     </el-menu-item>
                 </el-menu>
@@ -66,7 +66,7 @@ export default {
 
 <style scoped>
     .iconfont{
-        padding: 0 2px;
+        padding: 0 8px;
         font-size: 20px;
         color: #909399;
     }
