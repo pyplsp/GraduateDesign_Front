@@ -14,37 +14,41 @@ const routes = [
         children:[
             {
                 path: '',
-                redirect: 'liftData'
+                redirect: 'overview'
+            },
+            {
+                path:'overview',
+                component:() => import('@/views/views/overview')
             },
             {
                 path:'liftData',
-                component:() => import('@/views/afterLogin/liftData')
+                component:() => import('@/views/views/liftData')
             },
             {
-                path:'alarmNow',
-                component:() => import('@/views/afterLogin/alarmNow')
+                path:'internetOfThings',
+                component:() => import('@/views/views/internetOfThings')
             },
             {
-                path:'alarmHistory',
-                component:() => import('@/views/afterLogin/alarmHistory')
+                path: 'alarmHistory',
+                component: () => import('@/views/views/alarmHistory')
+            },
+            {
+                path:'rescueHistory',
+                component:() => import('@/views/views/rescueHistory')
             },
             {
                 path:'liftPosition',
-                component:() => import('@/views/afterLogin/liftPosition')
-            },
-            {
-                path:'rescueInformation',
-                component:() => import('@/views/afterLogin/rescueInformation')
+                component:() => import('@/views/views/liftPosition')
             },
             {
                 path:'setting',
-                component:() => import('@/views/afterLogin/setting')
+                component:() => import('@/views/views/setting')
             },
         ],
     },
     {
         path:'/login',
-        component:() => import('@/views/login'),
+        component:() => import('@/views/beforeLogin/login'),
         meta:{notShowMenu:true}
     },
 ]
@@ -54,28 +58,17 @@ const router = new VueRouter({
 })
 
 
-/*router.beforeEach((to, from, next)=>{
-    if (to.path === '/login' || to.path === '/register'){
+router.beforeEach((to, from, next)=>{
+    if (to.path === '/login'){
         next();
     }
     else if(localStorage.getItem('token') === null){
         next('/login')
     }
     else{
-        if(store.state.verify === false){
-            refresh().then(res =>{
-                localStorage.setItem('token',res.data.data.token)
-                next()
-                store.commit('changeVerify')
-            }).catch(() =>{
-                // token过期，跳转到 login 界面
-                next('/login')
-            })
-        }else{
-            next()
-        }
+        next()
     }
-})*/
+})
 
 export default router
 
