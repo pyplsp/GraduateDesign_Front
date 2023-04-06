@@ -10,33 +10,29 @@
                     @select="isSelect"
                     active-text-color="#ffd04b">
                     <el-menu-item index="1">
-                        <span class="iconfont icon-dianti"></span>
-                        <span slot="title">电梯档案</span>
+                        <span slot="title">数据概览</span>
                     </el-menu-item>
                     <el-submenu index="2">
                         <template slot="title">
-                            <span class="iconfont icon-jingbao"></span>
-                            <span>告警</span>
+                            <span>电梯数据</span>
                         </template>
                         <el-menu-item index="2-1">
-                            <span class="iconfont icon-winfo-icon-quyusaomiao"></span>
-                            <span slot="title">实时告警</span>
+                            <span slot="title">电梯档案</span>
                         </el-menu-item>
                         <el-menu-item index="2-2">
-                            <span class="iconfont icon-shijian"></span>
+                            <span slot="title">电梯位置</span>
+                        </el-menu-item>
+                        <el-menu-item index="2-3">
                             <span slot="title">告警记录</span>
+                        </el-menu-item>
+                        <el-menu-item index="2-4">
+                            <span slot="title">救援记录</span>
                         </el-menu-item>
                     </el-submenu>
                     <el-menu-item index="3">
-                        <span class="iconfont icon-ditu"></span>
-                        <span slot="title">位置分布</span>
+                        <span slot="title">物联网</span>
                     </el-menu-item>
                     <el-menu-item index="4">
-                        <span class="iconfont icon-miehuoqi"></span>
-                        <span slot="title">救援信息</span>
-                    </el-menu-item>
-                    <el-menu-item index="5">
-                        <span class="iconfont icon-shezhi"></span>
                         <span slot="title">设置</span>
                     </el-menu-item>
                 </el-menu>
@@ -51,25 +47,35 @@
 <script>
 export default {
     name: "afterLogin",
+    data(){
+        return{
+            nowIndex:'',
+        }
+    },
     methods: {
         isSelect(index){
+            if(this.nowIndex === index)
+                return
+            this.nowIndex = index
+
             switch (index[0]){
                 case '1':
-                    this.$router.replace('liftData')
+                    this.$router.replace('overview')
                     break;
                 case '2':
                     if(index === '2-1')
-                        this.$router.replace('alarmNow')
+                        this.$router.replace('liftData')
                     else if(index === '2-2')
+                        this.$router.replace('liftPosition')
+                    else if(index === '2-3')
                         this.$router.replace('alarmHistory')
+                    else if(index === '2-4')
+                        this.$router.replace('rescueHistory')
                     break;
                 case '3':
-                    this.$router.replace('liftPosition')
+                    this.$router.replace('internetOfThings')
                     break;
                 case '4':
-                    this.$router.replace('rescueInformation')
-                    break;
-                case '5':
                     this.$router.replace('setting')
                     break;
             }
