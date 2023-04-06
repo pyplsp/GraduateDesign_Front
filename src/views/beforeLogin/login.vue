@@ -14,6 +14,7 @@
 </template>
 
 <script>
+import {login} from '@/network/api.js'
 export default {
     name: "login",
     data(){
@@ -24,7 +25,21 @@ export default {
     },
     methods: {
         submit() {
-            this.$router.replace('/afterLogin')
+            login(this.userName,this.password).then(res =>{
+                console.log(res)
+                if(res.data.code === 200){
+                    localStorage.setItem("token",res.data.data)
+                    this.$router.replace('/afterLogin')
+                }
+                else{
+                    this.$message({
+                        message:res.data.message,
+                        type:'warning'
+                    })
+                }
+            }).catch(err =>{
+                this.$message.error('网络错误')
+            })
         }
     }
 }
