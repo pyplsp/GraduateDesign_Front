@@ -26,9 +26,9 @@ export default {
     methods: {
         submit() {
             login(this.userName,this.password).then(res =>{
-                console.log(res)
                 if(res.data.code === 200){
-                    localStorage.setItem("token",res.data.data)
+                    localStorage.setItem("Authorization",res.data.data.Authorization)
+                    localStorage.setItem("Administrator",res.data.data.Administrator)
                     this.$router.replace('/afterLogin')
                 }
                 else{
@@ -37,8 +37,6 @@ export default {
                         type:'warning'
                     })
                 }
-            }).catch(err =>{
-                this.$message.error('网络错误')
             })
         }
     }
