@@ -11,12 +11,14 @@
                 </el-form-item>
                 <el-form-item label="电梯类型">
                     <el-select v-model="formInline.liftType" placeholder="电梯类型">
-                        <el-option label="区域一" value="shanghai"></el-option>
-                        <el-option label="区域二" value="beijing"></el-option>
+                        <el-option label="全部" value=0></el-option>
+                        <el-option label="区域一" value=1></el-option>
+                        <el-option label="区域二" value=2></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="所属用户" v-show="ifAdministrator">
                     <el-select v-model="formInline.user" placeholder="所属用户">
+                        <el-option label="全部" value=0></el-option>
                         <el-option label="区域一" value="shanghai"></el-option>
                         <el-option label="区域二" value="beijing"></el-option>
                     </el-select>
@@ -33,44 +35,47 @@
         <div class="table">
             <div class="title">
                 <div>电梯档案信息</div>
-                <div><el-button size="mini">新增</el-button></div>
+                <div>
+                    <el-button size="mini">新增</el-button>
+                </div>
             </div>
             <el-table :data="tableData" style="width: 100%" max-height="700" border size="small" v-loading="loading">
                 <el-table-column label="设备代码" width="200">
                     <template slot-scope="scope">
-                        <a style="color: #1890ff;cursor: pointer">{{scope.row.liftCode}}</a>
+                        <a @click="checkLiftDetail(scope.row.id)" style="color: #1890ff;cursor: pointer">{{ scope.row.liftCode }}</a>
                     </template>
                 </el-table-column>
                 <el-table-column label="设备名称" width="200">
                     <template slot-scope="scope">
-                        <span>{{scope.row.liftName}}</span>
+                        <span>{{ scope.row.liftName }}</span>
                     </template>
                 </el-table-column>
                 <el-table-column label="设备类型" width="200">
                     <template slot-scope="scope">
-                        <span>{{scope.row.liftTypeId}}</span>
+                        <span>{{ scope.row.liftTypeId }}</span>
                     </template>
                 </el-table-column>
                 <el-table-column label="设备位置经度" width="200">
                     <template slot-scope="scope">
-                        <span>{{scope.row.positionX}}</span>
+                        <span>{{ scope.row.positionX }}</span>
                     </template>
                 </el-table-column>
                 <el-table-column label="设备位置纬度" width="200">
                     <template slot-scope="scope">
-                        <span>{{scope.row.positionY}}</span>
+                        <span>{{ scope.row.positionY }}</span>
                     </template>
                 </el-table-column>
                 <el-table-column label="描述">
                     <template slot-scope="scope">
-                        <span>{{scope.row.description}}</span>
+                        <span>{{ scope.row.description }}</span>
                     </template>
                 </el-table-column>
                 <el-table-column label="位置查看" width="102">
                     <template slot-scope="scope">
                         <el-button
                             size="mini"
-                            @click="position(scope.row.positionX,scope.row.positionY)">查看位置</el-button>
+                            @click="position(scope.row.positionX,scope.row.positionY)">查看位置
+                        </el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -84,6 +89,17 @@
             </div>
         </div>
         <!--自定义弹出框：增加电梯-->
+        <el-dialog
+            title="电梯详细信息"
+            :visible.sync="dialogVisible"
+            >
+            <span>这是一段信息</span>
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="dialogVisible = false">取 消</el-button>
+                <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+            </span>
+        </el-dialog>
+
 
         <!--自定义弹出框：编辑电梯-->
 
@@ -92,24 +108,26 @@
 
 <script>
 import {liftData, liftDataById} from "@/network/api";
+
 export default {
     name: "liftData",
     data() {
         return {
-            ifAdministrator:0,
+            ifAdministrator: 0,
             formInline: {
                 liftCode: "",
                 liftName: "",
                 liftType: null,
                 user: null,
             },
-            pagination:{
-                size:10,
-                current:1,
-                total:0
+            pagination: {
+                size: 10,
+                current: 1,
+                total: 0
             },
             tableData: [],
             loading: true,
+            dialogVisible: false
         }
     },
     methods: {
@@ -117,25 +135,29 @@ export default {
             this.loading = true
             this.axiosGetLiftData()
         },
-        position(){
+        position() {
 
         },
-        handleCurrentChange(val){
+        handleCurrentChange(val) {
             this.loading = true
             this.pagination.current = val
             this.axiosGetLiftData()
         },
-        axiosGetLiftData(){
-            liftData(this.pagination,this.formInline).then(res =>{
-                if (res.data.code === 200){
+        checkLiftDetail(id){
+            this.dialogVisible = true
+
+        },
+        axiosGetLiftData() {
+            liftData(this.pagination, this.formInline).then(res => {
+                if (res.data.code === 200) {
                     this.tableData = res.data.data.records
                     this.pagination.current = res.data.data.current
                     this.pagination.total = res.data.data.total
-                } else{
+                } else {
                     this.$message.error("加载失败")
                 }
                 this.loading = false
-            }).catch(err =>{
+            }).catch(err => {
                 this.loading = false
             })
         }
@@ -151,23 +173,28 @@ export default {
 .search {
     margin: 10px;
 }
-.table{
+
+.table {
     margin: 10px;
     padding: 10px;
     background-color: white;
 }
-.title{
-    margin:10px 0 20px 0;
+
+.title {
+    margin: 10px 0 20px 0;
     display: flex;
     line-height: 28px;
 }
-.title > div{
+
+.title > div {
     padding: 0 8px;
 }
-.pagination{
+
+.pagination {
     margin-top: 20px;
 }
-::v-deep .el-form-item{
+
+::v-deep .el-form-item {
     margin-bottom: 0;
 }
 </style>

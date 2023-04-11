@@ -18,11 +18,11 @@ const routes = [
             },
             {
                 path:'overview',
-                component:() => import('@/views/views/overview')
+                component:() => import('@/views/views/baseData/overview')
             },
             {
                 path:'liftData',
-                component:() => import('@/views/views/liftData')
+                component:() => import('@/views/views/baseData/liftData')
             },
             {
                 path:'internetOfThings',
@@ -30,15 +30,15 @@ const routes = [
             },
             {
                 path: 'alarmHistory',
-                component: () => import('@/views/views/alarmHistory')
+                component: () => import('@/views/views/baseData/alarmHistory')
             },
             {
                 path:'rescueHistory',
-                component:() => import('@/views/views/rescueHistory')
+                component:() => import('@/views/views/baseData/rescueHistory')
             },
             {
                 path:'liftPosition',
-                component:() => import('@/views/views/liftPosition')
+                component:() => import('@/views/views/baseData/liftPosition')
             },
             {
                 path:'setting',
