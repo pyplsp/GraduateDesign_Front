@@ -40,44 +40,44 @@
                 </div>
             </div>
             <el-table :data="tableData" style="width: 100%" max-height="700" border size="small" v-loading="loading">
-                <el-table-column label="设备代码" width="200">
+                <el-table-column label="设备代码" >
                     <template slot-scope="scope">
                         <a @click="checkLiftDetail(scope.row.id)" style="color: #1890ff;cursor: pointer">{{ scope.row.liftCode }}</a>
                     </template>
                 </el-table-column>
-                <el-table-column label="设备名称" width="200">
+                <el-table-column label="设备名称" >
                     <template slot-scope="scope">
                         <span>{{ scope.row.liftName }}</span>
                     </template>
                 </el-table-column>
-                <el-table-column label="设备类型" width="200">
+                <el-table-column label="设备类型" >
                     <template slot-scope="scope">
                         <span>{{ scope.row.liftTypeId }}</span>
                     </template>
                 </el-table-column>
-                <el-table-column label="设备位置经度" width="200">
+                <el-table-column label="设备位置经度" >
                     <template slot-scope="scope">
                         <span>{{ scope.row.positionX }}</span>
                     </template>
                 </el-table-column>
-                <el-table-column label="设备位置纬度" width="200">
+                <el-table-column label="设备位置纬度" >
                     <template slot-scope="scope">
                         <span>{{ scope.row.positionY }}</span>
                     </template>
                 </el-table-column>
-                <el-table-column label="描述">
+<!--                <el-table-column label="描述">
                     <template slot-scope="scope">
                         <span>{{ scope.row.description }}</span>
                     </template>
-                </el-table-column>
-                <el-table-column label="位置查看" width="102">
+                </el-table-column-->>
+<!--                <el-table-column label="位置查看" width="102">
                     <template slot-scope="scope">
                         <el-button
                             size="mini"
                             @click="position(scope.row.positionX,scope.row.positionY)">查看位置
                         </el-button>
                     </template>
-                </el-table-column>
+                </el-table-column>-->
             </el-table>
             <div class="pagination">
                 <el-pagination
@@ -92,12 +92,10 @@
         <el-dialog
             title="电梯详细信息"
             :visible.sync="dialogVisible"
+            width="70%"
             >
-            <span>这是一段信息</span>
-            <span slot="footer" class="dialog-footer">
-                <el-button @click="dialogVisible = false">取 消</el-button>
-                <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
-            </span>
+            <lift-detail :detail-data = "detailData" />
+
         </el-dialog>
 
 
@@ -108,9 +106,11 @@
 
 <script>
 import {liftData, liftDataById} from "@/network/api";
+import LiftDetail from "@/components/baseData/liftDetail";
 
 export default {
     name: "liftData",
+    components: {LiftDetail},
     data() {
         return {
             ifAdministrator: 0,
@@ -127,7 +127,8 @@ export default {
             },
             tableData: [],
             loading: true,
-            dialogVisible: false
+            dialogVisible: false,
+            detailData:{},
         }
     },
     methods: {
@@ -144,8 +145,12 @@ export default {
             this.axiosGetLiftData()
         },
         checkLiftDetail(id){
-            this.dialogVisible = true
-
+            liftDataById(id).then(res =>{
+                this.dialogVisible = true
+                if (res.data.code === 200) {
+                    this.detailData = res.data.data
+                }
+            })
         },
         axiosGetLiftData() {
             liftData(this.pagination, this.formInline).then(res => {
@@ -153,8 +158,6 @@ export default {
                     this.tableData = res.data.data.records
                     this.pagination.current = res.data.data.current
                     this.pagination.total = res.data.data.total
-                } else {
-                    this.$message.error("加载失败")
                 }
                 this.loading = false
             }).catch(err => {
@@ -196,5 +199,8 @@ export default {
 
 ::v-deep .el-form-item {
     margin-bottom: 0;
+}
+::v-deep .el-dialog__header{
+    border-bottom: 1px solid var(--colorBorder-theme);
 }
 </style>

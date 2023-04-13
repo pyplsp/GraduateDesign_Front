@@ -101,7 +101,7 @@ export default {
         position: relative;
         box-sizing: border-box;
         overflow-y: scroll;
-        background-color: #f0f2f5;
+        background-color: var(--colorBackground-theme);
     }
     #content::-webkit-scrollbar{
         width: 10px;
