@@ -43,6 +43,7 @@ export function baseReq(ifVerify){
         // 超出 2xx 范围的状态码都会触发该函数。
         // TODO:对响应错误做点什么
 
+        console.log(error)
         // 返回401表示请求验证失败，登录信息过期,让其返回到登录界面
         if(error.response.status === 401){
             router.replace('/login')

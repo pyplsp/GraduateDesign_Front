@@ -52,7 +52,7 @@
                 </el-table-column>
                 <el-table-column label="设备类型" >
                     <template slot-scope="scope">
-                        <span>{{ scope.row.liftTypeId }}</span>
+                        <span>{{ scope.row.liftTypeName }}</span>
                     </template>
                 </el-table-column>
                 <el-table-column label="设备位置经度" >
@@ -65,19 +65,6 @@
                         <span>{{ scope.row.positionY }}</span>
                     </template>
                 </el-table-column>
-<!--                <el-table-column label="描述">
-                    <template slot-scope="scope">
-                        <span>{{ scope.row.description }}</span>
-                    </template>
-                </el-table-column-->>
-<!--                <el-table-column label="位置查看" width="102">
-                    <template slot-scope="scope">
-                        <el-button
-                            size="mini"
-                            @click="position(scope.row.positionX,scope.row.positionY)">查看位置
-                        </el-button>
-                    </template>
-                </el-table-column>-->
             </el-table>
             <div class="pagination">
                 <el-pagination
@@ -92,9 +79,10 @@
         <el-dialog
             title="电梯详细信息"
             :visible.sync="dialogVisible"
-            width="70%"
-            >
-            <lift-detail :detail-data = "detailData" />
+            width="70%">
+            <lift-detail
+                :detail-data = "detailData"
+                @closeDialog="dialogVisibleChange"/>
 
         </el-dialog>
 
@@ -145,11 +133,15 @@ export default {
             this.axiosGetLiftData()
         },
         checkLiftDetail(id){
+            this.loading = true
             liftDataById(id).then(res =>{
-                this.dialogVisible = true
                 if (res.data.code === 200) {
                     this.detailData = res.data.data
+                    this.dialogVisible = true
                 }
+                this.loading = false
+            }).catch(()=>{
+                this.loading = false
             })
         },
         axiosGetLiftData() {
@@ -163,6 +155,9 @@ export default {
             }).catch(err => {
                 this.loading = false
             })
+        },
+        dialogVisibleChange(){
+            this.dialogVisible = !this.dialogVisible
         }
     },
     created() {

@@ -27,3 +27,16 @@ export function liftData(params,json){
 export function liftDataById(id){
     return baseReq(true).get('lift/' + id)
 }
+
+// 提交电梯修改信息
+export function modifyLift(id,json){
+    return baseReq(true).put(id,{
+        liftName:json.liftName,
+
+    })
+}
+
+// 删除电梯
+export function deleteLift(id){
+    return baseReq(true).delete('/lift/' + id)
+}
