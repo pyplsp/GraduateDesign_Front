@@ -10,24 +10,22 @@
                     <el-input v-model="formInline.liftName" placeholder="电梯名称"></el-input>
                 </el-form-item>
                 <el-form-item label="电梯类型">
-                    <el-select v-model="formInline.liftType" placeholder="电梯类型">
-                        <el-option label="全部" value=0></el-option>
-                        <el-option label="区域一" value=1></el-option>
-                        <el-option label="区域二" value=2></el-option>
+                    <el-select v-model="formInline.liftTypeId" placeholder="电梯类型">
+                        <el-option label="全部" value = "0"></el-option>
+                        <el-option :label="item.liftTypeName" :value="item.id" v-for="(item,index) in liftType"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="所属用户" v-show="ifAdministrator">
-                    <el-select v-model="formInline.user" placeholder="所属用户">
-                        <el-option label="全部" value=0></el-option>
-                        <el-option label="区域一" value="shanghai"></el-option>
-                        <el-option label="区域二" value="beijing"></el-option>
+                    <el-select v-model="formInline.userId" placeholder="所属用户">
+                        <el-option label="全部" value = "0"></el-option>
+                        <el-option :label="item.unitName" :value="item.id" v-for="(item,index) in unitName"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item style="text-align: right">
-                    <el-button type="primary" @click="search">查询</el-button>
+                    <el-button type="primary" @click="search" plain>查询</el-button>
                 </el-form-item>
                 <el-form-item style="text-align: right">
-                    <el-button @click="search">清空</el-button>
+                    <el-button @click="clear">清空</el-button>
                 </el-form-item>
             </el-form>
         </el-card>
@@ -36,7 +34,7 @@
             <div class="title">
                 <div>电梯档案信息</div>
                 <div>
-                    <el-button size="mini">新增</el-button>
+                    <el-button size="mini" type="primary" plain @click="addLift" :loading="loading">新增</el-button>
                 </div>
             </div>
             <el-table :data="tableData" style="width: 100%" max-height="700" border size="small" v-loading="loading">
@@ -65,6 +63,11 @@
                         <span>{{ scope.row.positionY }}</span>
                     </template>
                 </el-table-column>
+                <el-table-column label="所属单位" >
+                    <template slot-scope="scope">
+                        <span>{{ scope.row.unitName }}</span>
+                    </template>
+                </el-table-column>
             </el-table>
             <div class="pagination">
                 <el-pagination
@@ -75,48 +78,67 @@
                 </el-pagination>
             </div>
         </div>
-        <!--自定义弹出框：增加电梯-->
+        <!--自定义弹出框：电梯详情与编辑-->
         <el-dialog
+            :destroy-on-close="true"
             title="电梯详细信息"
-            :visible.sync="dialogVisible"
-            width="70%">
+            :visible.sync="detailDialogVisible"
+            width="70%"
+            :close-on-click-modal="false">
             <lift-detail
                 :detail-data = "detailData"
-                @closeDialog="dialogVisibleChange"/>
+                @closeDialog="detailDialogVisibleChange"/>
 
         </el-dialog>
+        <!--自定义弹出框：增加电梯-->
+        <el-dialog
+            :destroy-on-close="true"
+            title="添加设备"
+            :visible.sync="addLiftDialogVisible"
+            width="70%"
+            :close-on-click-modal="false">
+            <add-lift
+                @closeDialog="addLiftDialogVisibleChange"
+                :lift-type="liftType">
 
-
-        <!--自定义弹出框：编辑电梯-->
+            </add-lift>
+        </el-dialog>
 
     </div>
 </template>
 
 <script>
-import {liftData, liftDataById} from "@/network/api";
+import {_liftData, _liftDataById} from "@/network/api/apiLift";
 import LiftDetail from "@/components/baseData/liftDetail";
+import AddLift from "@/components/baseData/addLift";
+import {_liftType} from "@/network/api/apiLfitType";
+import {_unitName} from "@/network/api/apiUser";
 
 export default {
     name: "liftData",
-    components: {LiftDetail},
+    components: {AddLift, LiftDetail,},
     data() {
         return {
             ifAdministrator: 0,
             formInline: {
                 liftCode: "",
                 liftName: "",
-                liftType: null,
-                user: null,
+                liftTypeId: "0",
+                userId: null,
             },
             pagination: {
-                size: 10,
+                size: 15,
                 current: 1,
                 total: 0
             },
             tableData: [],
             loading: true,
-            dialogVisible: false,
+            detailDialogVisible: false,
+            addLiftDialogVisible:false,
+
             detailData:{},
+            liftType:[],
+            unitName:[],
         }
     },
     methods: {
@@ -130,22 +152,28 @@ export default {
         handleCurrentChange(val) {
             this.loading = true
             this.pagination.current = val
-            this.axiosGetLiftData()
+            this.axiosGetLiftData(false)
         },
         checkLiftDetail(id){
             this.loading = true
-            liftDataById(id).then(res =>{
+            _liftDataById(id).then(res =>{
                 if (res.data.code === 200) {
                     this.detailData = res.data.data
-                    this.dialogVisible = true
+                    this.detailDialogVisible = true
                 }
                 this.loading = false
             }).catch(()=>{
                 this.loading = false
             })
         },
-        axiosGetLiftData() {
-            liftData(this.pagination, this.formInline).then(res => {
+        addLift(){
+            this.addLiftDialogVisible = true
+        },
+        axiosGetLiftData(goToOne) {
+            if (goToOne){
+                this.pagination.current = 1 //回到第一页
+            }
+            _liftData(this.pagination, this.formInline).then(res => {
                 if (res.data.code === 200) {
                     this.tableData = res.data.data.records
                     this.pagination.current = res.data.data.current
@@ -156,13 +184,45 @@ export default {
                 this.loading = false
             })
         },
-        dialogVisibleChange(){
-            this.dialogVisible = !this.dialogVisible
+        axiosLiftType(){
+            _liftType().then(res =>{
+                if(res.data.code === 200){
+                    this.liftType = res.data.data
+                }
+            })
+        },
+        axiosUnitName(){
+            _unitName().then(res =>{
+                if(res.data.code === 200){
+                    this.unitName = res.data.data
+                }
+            })
+        },
+        detailDialogVisibleChange(ifReload){
+            this.detailDialogVisible = !this.detailDialogVisible
+            if (ifReload)
+                this.axiosGetLiftData(true)
+        },
+        addLiftDialogVisibleChange(ifReload){
+            this.addLiftDialogVisible = !this.addLiftDialogVisible
+            if (ifReload)
+                this.axiosGetLiftData(true)
+        },
+        clear(){
+            this.formInline = {
+                liftCode: "",
+                liftName: "",
+                liftTypeId: "0",
+                userId: null,
+            }
         }
     },
     created() {
         this.ifAdministrator = Number(localStorage.getItem("Administrator"));
-        this.axiosGetLiftData()
+        this.axiosLiftType()
+        if (this.ifAdministrator)
+            this.axiosUnitName()
+        this.axiosGetLiftData(false)
     }
 }
 </script>

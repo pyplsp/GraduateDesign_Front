@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import {login} from '@/network/api.js'
+import {_login} from '@/network/api/apiUser.js'
 export default {
     name: "login",
     data(){
@@ -25,7 +25,7 @@ export default {
     },
     methods: {
         submit() {
-            login(this.userName,this.password).then(res =>{
+            _login(this.userName,this.password).then(res =>{
                 if(res.data.code === 200){
                     localStorage.setItem("Authorization",res.data.data.Authorization)
                     localStorage.setItem("Administrator",res.data.data.Administrator)

@@ -7,6 +7,7 @@
                     class="el-menu-vertical-demo"
                     background-color="#545c64"
                     text-color="#fff"
+                    :default-active="defaultActive"
                     @select="isSelect"
                     active-text-color="#ffd04b">
                     <el-menu-item index="1">
@@ -50,6 +51,16 @@ export default {
     data(){
         return{
             nowIndex:'',
+            myMap:new Map([
+                ['1','overview'],
+                ['2-1','liftData'],
+                ['2-2','liftPosition'],
+                ['2-3','alarmHistory'],
+                ['2-4','rescueHistory'],
+                ['3','internetOfThings'],
+                ['4','setting'],
+            ]),
+            defaultActive:"",
         }
     },
     methods: {
@@ -57,29 +68,15 @@ export default {
             if(this.nowIndex === index)
                 return
             this.nowIndex = index
-
-            switch (index[0]){
-                case '1':
-                    this.$router.replace('overview')
-                    break;
-                case '2':
-                    if(index === '2-1')
-                        this.$router.replace('liftData')
-                    else if(index === '2-2')
-                        this.$router.replace('liftPosition')
-                    else if(index === '2-3')
-                        this.$router.replace('alarmHistory')
-                    else if(index === '2-4')
-                        this.$router.replace('rescueHistory')
-                    break;
-                case '3':
-                    this.$router.replace('internetOfThings')
-                    break;
-                case '4':
-                    this.$router.replace('setting')
-                    break;
-            }
+            this.$router.replace(String(this.myMap.get(index)))
         }
+    },
+    created() {
+        let path = this.$route.path.split('/')
+        let temp = new Map(
+            Array.from(this.myMap.entries()).map(([key, value]) => [value, key])
+        )
+        this.defaultActive = temp.get(path[path.length-1])
     },
 }
 </script>
