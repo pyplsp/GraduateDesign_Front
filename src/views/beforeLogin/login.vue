@@ -10,11 +10,13 @@
                 <el-button type="primary" icon="el-icon-s-promotion" @click = "submit()">登录</el-button>
             </div>
         </el-card>
+        <hello-world></hello-world>
     </div>
 </template>
 
 <script>
 import {_login} from '@/network/api/apiUser.js'
+import HelloWorld from "@/components/mqtt/HelloWorld";
 export default {
     name: "login",
     data(){
@@ -22,6 +24,9 @@ export default {
             userName:'',
             password:''
         }
+    },
+    components:{
+        HelloWorld
     },
     methods: {
         submit() {

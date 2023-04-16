@@ -6,10 +6,10 @@
                 <el-form-item label="设备代码">
                     <el-input v-model="formInline.liftCode" placeholder="设备代码"></el-input>
                 </el-form-item>
-                <el-form-item label="电梯名称">
+                <el-form-item label="设备名称">
                     <el-input v-model="formInline.liftName" placeholder="电梯名称"></el-input>
                 </el-form-item>
-                <el-form-item label="电梯类型">
+                <el-form-item label="设备类型">
                     <el-select v-model="formInline.liftTypeId" placeholder="电梯类型">
                         <el-option label="全部" value = "0"></el-option>
                         <el-option :label="item.liftTypeName" :value="item.id" v-for="(item,index) in liftType"></el-option>
@@ -81,7 +81,7 @@
         <!--自定义弹出框：电梯详情与编辑-->
         <el-dialog
             :destroy-on-close="true"
-            title="电梯详细信息"
+            title="设备详细信息"
             :visible.sync="detailDialogVisible"
             width="70%"
             :close-on-click-modal="false">

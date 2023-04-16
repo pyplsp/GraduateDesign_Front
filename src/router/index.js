@@ -51,6 +51,7 @@ const routes = [
         component:() => import('@/views/beforeLogin/login'),
         meta:{notShowMenu:true}
     },
+
 ]
 const router = new VueRouter({
     routes,

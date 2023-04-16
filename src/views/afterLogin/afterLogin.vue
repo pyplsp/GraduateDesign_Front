@@ -94,7 +94,7 @@ export default {
     #content{
         height: 100vh;
         flex: 1;
-        padding:10px;
+        padding:10px 0 10px 10px;
         position: relative;
         box-sizing: border-box;
         overflow-y: scroll;
