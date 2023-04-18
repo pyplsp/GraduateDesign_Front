@@ -1,8 +1,8 @@
 @font-face {
-  font-family: "iconfont"; /* Project id 3951955 */
-  src: url('iconfont.woff2?t=1678784940696') format('woff2'),
-       url('iconfont.woff?t=1678784940696') format('woff'),
-       url('iconfont.ttf?t=1678784940696') format('truetype');
+  font-family: "iconfont"; /* Project id 3955895 */
+  src: url('iconfont.woff2?t=1681701857523') format('woff2'),
+       url('iconfont.woff?t=1681701857523') format('woff'),
+       url('iconfont.ttf?t=1681701857523') format('truetype');
 }
 
 .iconfont {
@@ -13,31 +13,135 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-shijian:before {
-  content: "\e8c5";
+.icon-91jiazai:before {
+  content: "\e6a0";
 }
 
-.icon-miehuoqi:before {
-  content: "\e607";
-}
-
-.icon-winfo-icon-quyusaomiao:before {
-  content: "\e65f";
-}
-
-.icon-shezhi:before {
+.icon-fanhui:before {
   content: "\e60f";
 }
 
+.icon-xiangqing:before {
+  content: "\e632";
+}
+
+.icon-butongguodechacha:before {
+  content: "\e640";
+}
+
+.icon-video_camera_:before {
+  content: "\e606";
+}
+
+.icon-mic-off-full:before {
+  content: "\e96c";
+}
+
+.icon-record-sound-full:before {
+  content: "\e971";
+}
+
+.icon-jinggao:before {
+  content: "\e604";
+}
+
+.icon-baogaochaxun:before {
+  content: "\e605";
+}
+
+.icon-jiazai:before {
+  content: "\e642";
+}
+
+.icon-luyin:before {
+  content: "\e603";
+}
+
+.icon-xinhao:before {
+  content: "\e601";
+}
+
+.icon-xiangshang1:before {
+  content: "\e76d";
+}
+
+.icon-xiangxia1:before {
+  content: "\e771";
+}
+
+.icon-huo:before {
+  content: "\e66c";
+}
+
+.icon-lifangtilitiduomiantifangkuai2:before {
+  content: "\e7fb";
+}
+
+.icon-dianyuan:before {
+  content: "\e60c";
+}
+
+.icon-building:before {
+  content: "\e644";
+}
+
+.icon-shangxia:before {
+  content: "\e60d";
+}
+
+.icon-jinzhi:before {
+  content: "\e637";
+}
+
 .icon-dianti:before {
+  content: "\e666";
+}
+
+.icon-24gf-stopCircle:before {
+  content: "\ea89";
+}
+
+.icon-layers:before {
   content: "\e602";
 }
 
-.icon-ditu:before {
-  content: "\e627";
+.icon-overspeed:before {
+  content: "\e760";
 }
 
-.icon-jingbao:before {
-  content: "\e603";
+.icon-duoren-renqun:before {
+  content: "\e769";
+}
+
+.icon-gearmore:before {
+  content: "\e978";
+}
+
+.icon-3suo:before {
+  content: "\e678";
+}
+
+.icon-shebeixiuli:before {
+  content: "\e60e";
+}
+
+.icon-monitor-camera-full:before {
+  content: "\e963";
+}
+
+.icon-dianti1:before {
+  content: "\e625";
+}
+
+.icon-zhexiantu:before {
+  content: "\e600";
+}
+
+.icon-wangluo:before {
+  content: "\e70b";
+}
+
+.icon-wuwangluo:before {
+  content: "\e60b";
 }
 

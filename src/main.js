@@ -10,6 +10,12 @@ import 'element-ui/lib/theme-chalk/index.css';
 import '@/assets/css/normalize.css'
 import './theme/index.css'
 import router from "./router";
+import _store from './utils/store';
+
+import iconfont from '@/assets/AlibabaIcon/iconfont.css'
+
+
+Vue.prototype._store = _store;
 
 NProgress.configure({
   easing: 'ease',

@@ -78,24 +78,25 @@
                 </el-pagination>
             </div>
         </div>
+
         <!--自定义弹出框：电梯详情与编辑-->
         <el-dialog
             :destroy-on-close="true"
             title="设备详细信息"
             :visible.sync="detailDialogVisible"
-            width="70%"
+            width="1064px"
             :close-on-click-modal="false">
             <lift-detail
                 :detail-data = "detailData"
                 @closeDialog="detailDialogVisibleChange"/>
-
         </el-dialog>
+
         <!--自定义弹出框：增加电梯-->
         <el-dialog
             :destroy-on-close="true"
             title="添加设备"
             :visible.sync="addLiftDialogVisible"
-            width="70%"
+            width="1064px"
             :close-on-click-modal="false">
             <add-lift
                 @closeDialog="addLiftDialogVisibleChange"
@@ -124,7 +125,8 @@ export default {
                 liftCode: "",
                 liftName: "",
                 liftTypeId: "0",
-                userId: null,
+                userId: "0",
+                internetStatus:0
             },
             pagination: {
                 size: 15,
@@ -209,12 +211,8 @@ export default {
                 this.axiosGetLiftData(true)
         },
         clear(){
-            this.formInline = {
-                liftCode: "",
-                liftName: "",
-                liftTypeId: "0",
-                userId: null,
-            }
+            this.formInline.liftCode = ""
+            this.formInline.liftName = ""
         }
     },
     created() {
