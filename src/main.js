@@ -4,15 +4,15 @@ import ElementUI from 'element-ui';
 import BaiduMap from 'vue-baidu-map'
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
+import '@/assets/AlibabaIcon/iconfont.css'
 
 
 import 'element-ui/lib/theme-chalk/index.css';
 import '@/assets/css/normalize.css'
 import './theme/index.css'
 import router from "./router";
+import store from "@/store/store"
 import _store from './utils/store';
-
-import iconfont from '@/assets/AlibabaIcon/iconfont.css'
 
 
 Vue.prototype._store = _store;
@@ -34,5 +34,6 @@ Vue.use(BaiduMap, {
 
 new Vue({
   render: h => h(App),
-  router
+  router,
+  store
 }).$mount('#app')

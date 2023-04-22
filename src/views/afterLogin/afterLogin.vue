@@ -69,7 +69,32 @@ export default {
                 return
             this.nowIndex = index
             this.$router.replace(String(this.myMap.get(index)))
-        }
+        },
+        subscribe(topic){
+            this.$store.state.mqttClient.subscribe([topic],{ qos: 2 }, (err) => {
+                if (!err) {
+                    console.log('订阅主题: ' + topic);
+                    this.$store.state.mqttClient.on('message', (top, message) => {
+                        if(top === topic){
+                            let payload = JSON.parse(message.toString())
+                            this.$notify({
+                                type: 'warning',
+                                title: '告警提示',
+                                dangerouslyUseHTMLString: true,
+                                message: `
+                                <div>设备代码：${payload.liftIDNo}</div>
+                                <div>发生时间：${payload.alarmTime}</div>
+                                <div>告警类型：${payload.alarmTypeName}</div>
+                                <br />
+                                <div>请转到<a style="color: var(--colorActive-theme)">告警记录</a>界面查看详情</div>
+                            `,
+                                duration: 0,
+                            });
+                        }
+                    })
+                }
+            })
+        },
     },
     created() {
         let path = this.$route.path.split('/')
@@ -77,6 +102,9 @@ export default {
             Array.from(this.myMap.entries()).map(([key, value]) => [value, key])
         )
         this.defaultActive = temp.get(path[path.length-1])
+    },
+    mounted() {
+        this.subscribe('ALARM/' + localStorage.getItem('userId'))
     },
 }
 </script>
@@ -109,6 +137,7 @@ export default {
     }
     .tac{
         width: 200px;
+
     }
     ::v-deep .el-col-12{
         width: 201px;

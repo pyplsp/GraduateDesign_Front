@@ -1,4 +1,5 @@
 let _store = {
+    mqttUrl:'ws://211.159.225.217:8083/mqtt',
     mqttConfig:{
         username: "admin",
         password: "admin",

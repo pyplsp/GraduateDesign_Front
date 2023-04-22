@@ -46,7 +46,7 @@ export function baseReq(ifVerify){
         // TODO:对响应错误做点什么
         NProgress.done()
         // 返回401表示请求验证失败，登录信息过期,让其返回到登录界面
-        if(error.response.status === 401){
+        if(error.response && error.response.status === 401){
             router.replace('/login')
         }else{
             // 显示加载错误信息

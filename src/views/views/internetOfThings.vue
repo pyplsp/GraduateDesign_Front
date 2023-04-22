@@ -64,8 +64,8 @@
                         <div class="realTime">
                             <a
                                 style="cursor: pointer"
-                                class="el-icon-camera-solid">
-
+                                class="el-icon-camera-solid"
+                                @click="openVideo(scope.row.liftCode)">
                             </a>
                         </div>
                     </template>
@@ -74,7 +74,7 @@
                     <template slot-scope="scope">
                         <div class="realTime">
                             <a
-                               @click="open(scope.row.liftCode)"
+                               @click="openRealtime(scope.row.liftCode)"
                                style="cursor: pointer"
                                class="el-icon-s-platform">
                             </a>
@@ -94,16 +94,26 @@
 
         <!--   电梯实时数据弹窗     -->
         <el-dialog
-            :destroy-on-close="true"
-            title="实时数据"
+            :title="'实时数据 (' + nowLIftCode + ')'"
             :visible.sync="realTimeDialogVisible"
             width="1064px"
             :close-on-click-modal="false">
-            <real-time-detail>
+            <real-time-detail
+                v-if="realTimeDialogVisible"
+                :lift-code = "nowLIftCode"
+                ref="customComponent">
 
             </real-time-detail>
         </el-dialog>
 
+        <!--    监控实时数据弹窗        -->
+        <el-dialog
+        :title="'画面直播 (' + nowLIftCode + ')'"
+        :visible.sync="videoDialogVisible"
+        width="1064px"
+        :close-on-click-modal="false">
+            <video-detail v-if="videoDialogVisible" :lift-code="nowLIftCode" />
+        </el-dialog>
 
     </div>
 </template>
@@ -113,11 +123,12 @@ import {_liftType} from "@/network/api/apiLfitType";
 import {_unitName} from "@/network/api/apiUser";
 import {_liftData} from "@/network/api/apiLift";
 import RealTimeDetail from "@/components/baseData/realTimeDetail";
+import VideoDetail from "@/components/baseData/videoDetail";
 export default {
     name: "internetOfThings",
     components:{
+        VideoDetail,
         RealTimeDetail
-
     },
     data() {
         return {
@@ -141,8 +152,11 @@ export default {
             unitName:[],
 
             realTimeDialogVisible:false,
+            videoDialogVisible:false,
 
-            mqttClient:null
+            nowLIftCode:"",
+
+            flvPlayer:null
         }
     },
     methods: {
@@ -188,8 +202,13 @@ export default {
             this.formInline.liftCode = ""
             this.formInline.liftName = ""
         },
-        open(liftCode){
-            this.realTimeDialogVisible = true;
+        openRealtime(liftCode){
+            this.nowLIftCode = liftCode
+            this.realTimeDialogVisible = true
+        },
+        openVideo(liftCode){
+            this.nowLIftCode = liftCode
+            this.videoDialogVisible = true
         }
     },
     created() {
@@ -198,8 +217,7 @@ export default {
         if (this.ifAdministrator)
             this.axiosUnitName()
         this.axiosGetLiftData(false)
-        console.log(this._store)
-    }
+    },
 }
 </script>
 
