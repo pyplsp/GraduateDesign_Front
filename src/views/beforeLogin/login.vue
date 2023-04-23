@@ -10,7 +10,6 @@
                 <el-button type="primary" icon="el-icon-s-promotion" @click = "submit()">登录</el-button>
             </div>
         </el-card>
-        <hello-world></hello-world>
     </div>
 </template>
 

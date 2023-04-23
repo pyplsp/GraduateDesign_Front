@@ -17,7 +17,11 @@
                 </div>
                 <div class="realRealItem">
                     <div>是否有人</div>
-                    <div id="hasPersonBox">{{wsData.hasPerson === -1 ? '没人' : wsData.hasPerson === 0 ? '未知' : '有人'}}</div>
+                    <div id="hasPersonBox">
+                        <span v-if="wsData.hasPerson !== null">
+                            {{wsData.hasPerson === -1 ? '没人' : wsData.hasPerson === 0 ? '未知' : '有人'}}
+                        </span>
+                    </div>
                 </div>
                 <div class="realRealItem">
                     <div>网络类型</div>
@@ -33,7 +37,11 @@
                 </div>
                 <div class="realRealItem">
                     <div>控制器密码</div>
-                    <div id="hasPasswordBox">{{wsData.hasPassword === -1 ? '无密码' : '有密码'}}</div>
+                    <div id="hasPasswordBox">
+                        <span v-if="wsData.hasPassword !== null">
+                            {{wsData.hasPassword === -1 ? '无密码' : '有密码'}}
+                        </span>
+                    </div>
                 </div>
             </div>
             <div id="realIcon">
@@ -113,8 +121,6 @@ export default {
 
             // 实时数据
             wsData:{
-
-
                 speed:null, //当前速度
                 personNum:null, //当前人数
                 currFloor:null, //当前楼层

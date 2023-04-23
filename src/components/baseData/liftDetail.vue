@@ -71,7 +71,7 @@
             <span>电梯位置</span>
             <baidu-map class="bm-view" :scroll-wheel-zoom="true" :center="{lng: detailData.positionX, lat: detailData.positionY}" :zoom="15">
                 <bm-navigation anchor="BMAP_ANCHOR_TOP_RIGHT"></bm-navigation>
-                <bm-marker :position="{lng: detailData.positionX, lat: detailData.positionY}" :dragging="true" animation="BMAP_ANIMATION_BOUNCE" />
+                <bm-marker :position="{lng: detailData.positionX, lat: detailData.positionY}" animation="BMAP_ANIMATION_BOUNCE" />
             </baidu-map>
         </div>
 

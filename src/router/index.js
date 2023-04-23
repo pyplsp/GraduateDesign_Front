@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import store from "@/store/store";
 
 Vue.use(VueRouter)
 
@@ -61,6 +62,9 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next)=>{
     if (to.path === '/login'){
+        // 如果主动到达登录页面，应该尝试断开mqtt连接
+        if(store.state.mqttClient.connected === true)
+            store.commit("mqttClientDisconnect")
         next();
     }
     else if(localStorage.getItem('Authorization') === null){

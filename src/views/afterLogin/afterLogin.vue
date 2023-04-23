@@ -42,7 +42,24 @@
             </el-row>
 
             <div id="mqttStatus">
-                144161
+                <el-card class="netBoard">
+                    <div slot="header">
+                        物联网状态
+                        <span v-if="connectNet" class="yes el-icon-check"></span>
+                        <span v-else @click="connectMqtt" class="refresh el-icon-refresh-left"></span>
+                    </div>
+                    <div>
+                        <span v-if="connectNet">物联网已连接 <span class="el-icon-success" style="color: #84fdb7"></span></span>
+                        <span v-else>物联网未连接 <span class="el-icon-warning" style="color: #ff5454"></span></span>
+                    </div>
+                    <br />
+                    <div>
+                        <span v-if="subAlarm">告警已订阅 <span class="el-icon-success" style="color: #5affa0"></span></span>
+                        <span v-else>告警未订阅 <span class="el-icon-success" style="color: #ff5454"></span></span>
+                    </div>
+                </el-card>
+
+
             </div>
         </div>
         <div id="content">
@@ -67,6 +84,9 @@ export default {
                 ['4','setting'],
             ]),
             defaultActive:"",
+
+            connectNet:false,
+            subAlarm:false,
         }
     },
     methods: {
@@ -80,25 +100,49 @@ export default {
             this.$store.state.mqttClient.subscribe([topic],{ qos: 2 }, (err) => {
                 if (!err) {
                     console.log('订阅主题: ' + topic);
+                    this.subAlarm = true
                     this.$store.state.mqttClient.on('message', (top, message) => {
                         if(top === topic){
                             let payload = JSON.parse(message.toString())
-                            this.$notify({
-                                type: 'warning',
-                                title: '告警提示',
-                                dangerouslyUseHTMLString: true,
-                                message: `
-                                <div>设备代码：${payload.liftIDNo}</div>
-                                <div>发生时间：${payload.alarmTime}</div>
-                                <div>告警类型：${payload.alarmTypeName}</div>
-                                <br />
-                                <div>请转到<a style="color: var(--colorActive-theme)">告警记录</a>界面查看详情</div>
-                            `,
-                                duration: 0,
-                            });
+                            if(payload.alarmStatus === 0){
+                                this.$notify({
+                                    type: 'success',
+                                    title: '告警解除',
+                                    dangerouslyUseHTMLString: true,
+                                    message: `
+                                        <div>设备代码：${payload.liftIDNo}</div>
+                                        <div>解除时间：${payload.alarmTime}</div>
+                                        <div>告警类型：${payload.alarmTypeName}</div>
+                                        <br />
+                                        <div>请转到<a style="color: var(--colorActive-theme)">告警记录</a>界面查看详情</div>
+                                    `,
+                                    duration: 0,
+                                });
+                            }else{
+                                this.$notify({
+                                    type: 'warning',
+                                    title: '告警提示',
+                                    dangerouslyUseHTMLString: true,
+                                    message: `
+                                        <div>设备代码：${payload.liftIDNo}</div>
+                                        <div>发生时间：${payload.alarmTime}</div>
+                                        <div>告警类型：${payload.alarmTypeName}</div>
+                                        <br />
+                                        <div>请转到<a style="color: var(--colorActive-theme)">告警记录</a>界面查看详情</div>
+                                    `,
+                                    duration: 0,
+                                });
+                            }
                         }
                     })
                 }
+            })
+        },
+        connectMqtt(){
+            this.$store.commit("mqttClientConnect")
+            this.$store.state.mqttClient.on('connect',()=>{
+                this.connectNet = true
+                this.subscribe('ALARM/' + localStorage.getItem('userId'))
             })
         },
     },
@@ -110,7 +154,8 @@ export default {
         this.defaultActive = temp.get(path[path.length-1])
     },
     mounted() {
-        this.subscribe('ALARM/' + localStorage.getItem('userId'))
+        this.connectMqtt()
+
     },
 }
 </script>
@@ -144,15 +189,29 @@ export default {
     #nav{
         width: 200px;
     }
+    .netBoard{
+        background-color: #68717a;
+        color: white
+    }
     #mqttStatus{
-        height: 30vh;
+        height: 20vh;
+        font-weight: 900;
         color: white;
-        background-color: var(--colorActive-theme);
+        background-color: #545c64;
+        padding: 10px;
+        box-sizing: border-box;
+    }
+    .refresh{
+        float: right;
+        cursor: pointer ;
+    }
+    .yes{
+        float: right;
     }
     ::v-deep .el-col-12{
         width: 201px;
     }
     .el-menu{
-        height: 70vh;
+        height: 80vh;
     }
 </style>

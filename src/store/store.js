@@ -8,7 +8,9 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
     // 这5个对象一般都是固定的
     state: { //保存状态
-        mqttClient:null,
+        mqttClient:{
+            connect:false
+        },
         mqttUrl:'ws://211.159.225.217:8083/mqtt',
         mqttConfig:{
             username: "admin",
@@ -23,13 +25,13 @@ const store = new Vuex.Store({
         mqttClientConnect(state){
             state.mqttClient = mqtt.connect(state.mqttUrl,state.mqttConfig)
             state.mqttClient.on('connect',()=>{
-                console.log('实时数据：成功连接mqtt服务器')
+                console.log('成功连接mqtt服务器')
             })
         },
         mqttClientDisconnect(state){
             try {
                 state.mqttClient.end(false, () => {
-                    console.log('实时数据：成功断开mqtt服务器')
+                    console.log('成功断开mqtt服务器')
                 })
             } catch (error) {
                 console.log('实时数据：断开mqtt服务器失败', error.toString())
