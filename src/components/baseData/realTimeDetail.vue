@@ -172,8 +172,10 @@ export default {
             this.$store.state.mqttClient.subscribe([topic],{ qos: 0 }, (err) => {
                 if (!err) {
                     console.log('订阅主题: ' + topic);
-                    this.$store.state.mqttClient.on('message', (topic, message) => {
-                        this.wsData = JSON.parse(message.toString())
+                    this.$store.state.mqttClient.on('message', (top, message) => {
+                        if(top === topic){
+                            this.wsData = JSON.parse(message.toString())
+                        }
                     })
                 }
             })

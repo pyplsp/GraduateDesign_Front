@@ -21,7 +21,7 @@ export default {
             const video = document.getElementById('myVideo');
             this.flvPlayer = flvJs.createPlayer({
                 type: 'flv',
-                url: 'https://28181.shenri.net.cn:10010/sms/34020000002020000001/flv/hls/311010025202025NJP77_311010025202025NJP77.flv' //你的url地址
+                url: `https://28181.shenri.net.cn:10010/sms/34020000002020000001/flv/hls/${this.liftCode}_${this.liftCode}.flv` //你的url地址
             });
             this.flvPlayer.attachMediaElement(video);
             this.flvPlayer.load();
