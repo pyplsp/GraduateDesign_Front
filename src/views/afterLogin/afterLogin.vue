@@ -49,8 +49,8 @@
                         <span v-else @click="connectMqtt" class="refresh el-icon-refresh-left"></span>
                     </div>
                     <div>
-                        <span v-if="connectNet">物联网已连接 <span class="el-icon-success" style="color: #84fdb7"></span></span>
-                        <span v-else>物联网未连接 <span class="el-icon-warning" style="color: #ff5454"></span></span>
+                        <span v-if="connectNet">物联网已连接 <span class="el-icon-success" style="color: var(--colorCorrect-theme)"></span></span>
+                        <span v-else>物联网未连接 <span class="el-icon-warning" style="color: var(--colorError-theme)"></span></span>
                     </div>
                     <br />
                     <div>

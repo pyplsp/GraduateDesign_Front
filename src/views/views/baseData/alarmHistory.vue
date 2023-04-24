@@ -4,21 +4,16 @@
         <el-card class="search">
             <el-form :inline="true" :model="formInline" class="demo-form-inline" size="mini">
                 <el-form-item label="设备代码">
-                    <el-input v-model="formInline.liftCode" placeholder="设备代码"></el-input>
+                    <el-input v-model="formInline.liftCode" placeholder="设备代码" @change="search"></el-input>
                 </el-form-item>
-                <el-form-item label="设备名称">
-                    <el-input v-model="formInline.liftName" placeholder="电梯名称"></el-input>
+                <el-form-item label="告警类型">
+                    <el-input v-model="formInline.alarmTypeName" placeholder="告警类型" @change="search"></el-input>
                 </el-form-item>
-                <el-form-item label="设备类型">
-                    <el-select v-model="formInline.liftTypeId" placeholder="电梯类型">
-                        <el-option label="全部" value = "0"></el-option>
-                        <el-option :label="item.liftTypeName" :value="item.id" v-for="(item,index) in liftType"></el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="所属用户" v-show="ifAdministrator">
-                    <el-select v-model="formInline.userId" placeholder="所属用户">
-                        <el-option label="全部" value = "0"></el-option>
-                        <el-option :label="item.unitName" :value="item.id" v-for="(item,index) in unitName"></el-option>
+                <el-form-item label="告警状态">
+                    <el-select v-model="formInline.alarmStatus" placeholder="告警状态" @change="search">
+                        <el-option label="全部" :value = null></el-option>
+                        <el-option label="已解除" value="0"></el-option>
+                        <el-option label="未解除" value="1"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item style="text-align: right">
@@ -34,38 +29,51 @@
             <div class="title">
                 <div>电梯档案信息</div>
                 <div>
-                    <el-button size="mini" type="primary" plain @click="addLift" :loading="loading">新增</el-button>
+                    <el-button size="mini" type="primary" plain @click="refresh">刷新</el-button>
                 </div>
             </div>
             <el-table :data="tableData" style="width: 100%" max-height="700" border size="small" v-loading="loading">
                 <el-table-column label="设备代码" >
                     <template slot-scope="scope">
-                        <a @click="checkLiftDetail(scope.row.id)" style="color: #1890ff;cursor: pointer">{{ scope.row.liftCode }}</a>
+                        <a @click="" style="color: #1890ff;cursor: pointer">{{ scope.row.liftCode }}</a>
                     </template>
                 </el-table-column>
-                <el-table-column label="设备名称" >
+                <el-table-column label="告警类型" >
                     <template slot-scope="scope">
-                        <span>{{ scope.row.liftName }}</span>
+                        <a @click="">{{ scope.row.alarmTypeName }}</a>
                     </template>
                 </el-table-column>
-                <el-table-column label="设备类型" >
+                <el-table-column label="发生时间" >
                     <template slot-scope="scope">
-                        <span>{{ scope.row.liftTypeName }}</span>
+                        <span>{{ scope.row.alarmTime }}</span>
                     </template>
                 </el-table-column>
-                <el-table-column label="设备位置经度" >
+                <el-table-column label="解除时间" >
                     <template slot-scope="scope">
-                        <span>{{ scope.row.positionX }}</span>
+                        <span>{{ scope.row.alarmRemoveTime }}</span>
                     </template>
                 </el-table-column>
-                <el-table-column label="设备位置纬度" >
+                <el-table-column label="状态" >
                     <template slot-scope="scope">
-                        <span>{{ scope.row.positionY }}</span>
+                        <span v-if="scope.row.alarmStatus" style="color: var(--colorError-theme)">未解除</span>
+                        <span v-else style="color: var(--colorCorrect-theme)">已解除</span>
                     </template>
                 </el-table-column>
-                <el-table-column label="所属单位" >
+                <el-table-column label="当前人数" >
                     <template slot-scope="scope">
-                        <span>{{ scope.row.unitName }}</span>
+                        <span>{{ scope.row.personNum }} 人</span>
+                    </template>
+                </el-table-column>
+                <el-table-column label="楼层" >
+                    <template slot-scope="scope">
+                        <span>{{ scope.row.currFloor }} 楼</span>
+                    </template>
+                </el-table-column>
+                <el-table-column label="是否平层" >
+                    <template slot-scope="scope">
+                        <span v-if="scope.row.ifFlat">平层</span>
+                        <span v-else-if="scope.row.ifFlat === -1">不平层</span>
+                        <span v-else>未知</span>
                     </template>
                 </el-table-column>
             </el-table>
@@ -83,21 +91,93 @@
 </template>
 
 <script>
+import {_alarmData} from "@/network/api/apiAlarm";
+
 export default {
     name: "alarmHistory",
     data(){
         return{
             formInline: {
                 liftCode: "",
-                liftName: "",
-                liftTypeId: "0",
-                userId: "0",
+                alarmTypeName:"",
+                alarmStatus:null,
+            },
+            tableData:[],
+            loading:true,
+            pagination: {
+                size: 1,
+                current: 1,
+                total: 0
             },
         }
+    },
+    methods:{
+        getAlarmData(){
+            _alarmData(this.pagination, this.formInline).then((res)=>{
+                if (res.data.code === 200) {
+                    this.tableData = res.data.data.records
+                    this.pagination.current = res.data.data.current
+                    this.pagination.total = res.data.data.total
+                }
+                this.loading = false
+            }).catch(err => {
+                this.loading = false
+            })
+        },
+        search(){
+            this.pagination.current = 1 //回到第一页
+            this.getAlarmData()
+        },
+        clear(){
+            this.formInline = {
+                liftCode: "",
+                alarmTypeName:"",
+                alarmStatus:null,
+            }
+        },
+        handleCurrentChange(val){
+            this.loading = true
+            this.pagination.current = val
+            this.getAlarmData()
+        },
+        refresh(){
+
+        }
+    },
+    created() {
+        this.getAlarmData()
     }
 }
 </script>
 
 <style scoped>
+.search {
+    margin: 10px;
+}
 
+.table {
+    margin: 10px;
+    padding: 10px;
+    background-color: white;
+}
+
+.title {
+    margin: 10px 0 20px 0;
+    display: flex;
+    line-height: 28px;
+}
+
+.title > div {
+    padding: 0 8px;
+}
+
+.pagination {
+    margin-top: 20px;
+}
+::v-deep .el-form-item {
+    margin-bottom: 0;
+}
+::v-deep .el-dialog__header{
+    border-bottom: 1px solid var(--colorBorder-theme);
+}
 </style>

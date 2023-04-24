@@ -4,19 +4,19 @@
         <el-card class="search">
             <el-form :inline="true" :model="formInline" class="demo-form-inline" size="mini">
                 <el-form-item label="设备代码">
-                    <el-input v-model="formInline.liftCode" placeholder="设备代码"></el-input>
+                    <el-input v-model="formInline.liftCode" placeholder="设备代码" @change="search"></el-input>
                 </el-form-item>
                 <el-form-item label="设备名称">
-                    <el-input v-model="formInline.liftName" placeholder="电梯名称"></el-input>
+                    <el-input v-model="formInline.liftName" placeholder="电梯名称" @change="search"></el-input>
                 </el-form-item>
                 <el-form-item label="设备类型">
-                    <el-select v-model="formInline.liftTypeId" placeholder="电梯类型">
+                    <el-select v-model="formInline.liftTypeId" placeholder="电梯类型" @change="search">
                         <el-option label="全部" value = "0"></el-option>
                         <el-option :label="item.liftTypeName" :value="item.id" v-for="(item,index) in liftType"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="所属用户" v-show="ifAdministrator">
-                    <el-select v-model="formInline.userId" placeholder="所属用户">
+                    <el-select v-model="formInline.userId" placeholder="所属用户" @change="search">
                         <el-option label="全部" value = "0"></el-option>
                         <el-option :label="item.unitName" :value="item.id" v-for="(item,index) in unitName"></el-option>
                     </el-select>
