@@ -194,7 +194,7 @@ export default {
         color: white
     }
     #mqttStatus{
-        height: 20vh;
+        height: 30vh;
         font-weight: 900;
         color: white;
         background-color: #545c64;
@@ -212,6 +212,6 @@ export default {
         width: 201px;
     }
     .el-menu{
-        height: 80vh;
+        height: 70vh;
     }
 </style>
