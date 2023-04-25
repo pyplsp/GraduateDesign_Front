@@ -140,39 +140,39 @@ export default {
 </script>
 
 <style scoped>
-.btn {
-    background-color: var(--colorBackground-theme);
-    padding: 5px 10px;
-    margin-bottom: 20px;
-}
+    .btn {
+        background-color: var(--colorBackground-theme);
+        padding: 5px 10px;
+        margin-bottom: 20px;
+    }
 
-.baseData {
-    margin: 20px 0;
-}
+    .baseData {
+        margin: 20px 0;
+    }
 
-.position {
-    margin: 20px 0;
-}
+    .position {
+        margin: 20px 0;
+    }
 
-.btn, .position > div, .baseData > div {
-    margin-top: 10px;
-}
+    .btn, .position > div, .baseData > div {
+        margin-top: 10px;
+    }
 
-::v-deep .el-input__inner{
-    border: none;
-}
-::v-deep .el-input.is-disabled .el-input__inner{
-    background: none;
-}
-::v-deep .el-textarea__inner{
-    border: none;
-}
-::v-deep .el-textarea.is-disabled .el-textarea__inner{
-    border: none;
-    background: none;
-}
+    ::v-deep .el-input__inner{
+        border: none;
+    }
+    ::v-deep .el-input.is-disabled .el-input__inner{
+        background: none;
+    }
+    ::v-deep .el-textarea__inner{
+        border: none;
+    }
+    ::v-deep .el-textarea.is-disabled .el-textarea__inner{
+        border: none;
+        background: none;
+    }
 
-::v-deep .el-form-item__error{
-    padding-top: 0;
-}
+    ::v-deep .el-form-item__error{
+        padding-top: 0;
+    }
 </style>

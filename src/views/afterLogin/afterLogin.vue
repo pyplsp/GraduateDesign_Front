@@ -1,46 +1,44 @@
 <template>
     <div id="afterLogin">
         <div id="nav">
-            <el-row class="tac">
-                <el-col :span="12">
-                    <el-menu
-                        default-active="1"
-                        class="el-menu-vertical-demo"
-                        background-color="#545c64"
-                        text-color="#fff"
-                        :default-active="defaultActive"
-                        @select="isSelect"
-                        active-text-color="#ffd04b">
-                        <el-menu-item index="1">
-                            <span slot="title">数据概览</span>
-                        </el-menu-item>
-                        <el-submenu index="2">
-                            <template slot="title">
-                                <span>电梯数据</span>
-                            </template>
-                            <el-menu-item index="2-1">
-                                <span slot="title">电梯档案</span>
+            <div id="myN">
+                <el-row class="tac">
+                    <el-col :span="12">
+                        <el-menu
+                            default-active="1"
+                            class="el-menu-vertical-demo"
+                            background-color="#545c64"
+                            text-color="#fff"
+                            :default-active="defaultActive"
+                            @select="isSelect"
+                            active-text-color="#ffd04b">
+                            <el-menu-item index="1">
+                                <span slot="title">数据概览</span>
                             </el-menu-item>
-                            <el-menu-item index="2-2">
-                                <span slot="title">电梯位置</span>
+                            <el-submenu index="2">
+                                <template slot="title">
+                                    <span>电梯数据</span>
+                                </template>
+                                <el-menu-item index="2-1">
+                                    <span slot="title">电梯档案</span>
+                                </el-menu-item>
+                                <el-menu-item index="2-2">
+                                    <span slot="title">电梯位置</span>
+                                </el-menu-item>
+                                <el-menu-item index="2-3">
+                                    <span slot="title">告警记录</span>
+                                </el-menu-item>
+                            </el-submenu>
+                            <el-menu-item index="3">
+                                <span slot="title">物联网</span>
                             </el-menu-item>
-                            <el-menu-item index="2-3">
-                                <span slot="title">告警记录</span>
+                            <el-menu-item index="4">
+                                <span slot="title">设置</span>
                             </el-menu-item>
-                            <el-menu-item index="2-4">
-                                <span slot="title">救援记录</span>
-                            </el-menu-item>
-                        </el-submenu>
-                        <el-menu-item index="3">
-                            <span slot="title">物联网</span>
-                        </el-menu-item>
-                        <el-menu-item index="4">
-                            <span slot="title">设置</span>
-                        </el-menu-item>
-                    </el-menu>
-                </el-col>
-            </el-row>
-
+                        </el-menu>
+                    </el-col>
+                </el-row>
+            </div>
             <div id="mqttStatus">
                 <el-card class="netBoard">
                     <div slot="header">
@@ -58,8 +56,6 @@
                         <span v-else>告警未订阅 <span class="el-icon-success" style="color: #ff5454"></span></span>
                     </div>
                 </el-card>
-
-
             </div>
         </div>
         <div id="content">
@@ -79,7 +75,6 @@ export default {
                 ['2-1','liftData'],
                 ['2-2','liftPosition'],
                 ['2-3','alarmHistory'],
-                ['2-4','rescueHistory'],
                 ['3','internetOfThings'],
                 ['4','setting'],
             ]),
@@ -166,11 +161,12 @@ export default {
         color: #909399;
     }
     #afterLogin{
+        height: 100vh;
+        min-height: 770px;
         display: flex;
         overflow: hidden;
     }
     #content{
-        height: 100vh;
         flex: 1;
         padding:10px 0 10px 10px;
         position: relative;
@@ -187,16 +183,20 @@ export default {
     }
     #nav{
         width: 200px;
+        height: 100%;
+        background-color: #545c64;
+    }
+    #myN{
+        height: 70%;
     }
     .netBoard{
         background-color: #68717a;
         color: white
     }
     #mqttStatus{
-        height: 30vh;
+        height: 30%;
         font-weight: 900;
         color: white;
-        background-color: #545c64;
         padding: 10px;
         box-sizing: border-box;
     }
@@ -209,8 +209,5 @@ export default {
     }
     ::v-deep .el-col-12{
         width: 201px;
-    }
-    .el-menu{
-        height: 70vh;
     }
 </style>

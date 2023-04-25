@@ -34,10 +34,6 @@ const routes = [
                 component: () => import('@/views/views/baseData/alarmHistory')
             },
             {
-                path:'rescueHistory',
-                component:() => import('@/views/views/baseData/rescueHistory')
-            },
-            {
                 path:'liftPosition',
                 component:() => import('@/views/views/baseData/liftPosition')
             },

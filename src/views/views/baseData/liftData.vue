@@ -66,7 +66,7 @@
                         <span>{{ scope.row.positionY }}</span>
                     </template>
                 </el-table-column>
-                <el-table-column label="所属单位" >
+                <el-table-column label="单位" >
                     <template slot-scope="scope">
                         <span>{{ scope.row.unitName }}</span>
                     </template>
@@ -232,34 +232,34 @@ export default {
 </script>
 
 <style scoped>
-.search {
-    margin: 10px;
-}
+    .search {
+        margin: 10px;
+    }
 
-.table {
-    margin: 10px;
-    padding: 10px;
-    background-color: white;
-}
+    .table {
+        margin: 10px;
+        padding: 10px;
+        background-color: white;
+    }
 
-.title {
-    margin: 10px 0 20px 0;
-    display: flex;
-    line-height: 28px;
-}
+    .title {
+        margin: 10px 0 20px 0;
+        display: flex;
+        line-height: 28px;
+    }
 
-.title > div {
-    padding: 0 8px;
-}
+    .title > div {
+        padding: 0 8px;
+    }
 
-.pagination {
-    margin-top: 20px;
-}
+    .pagination {
+        margin-top: 20px;
+    }
 
-::v-deep .el-form-item {
-    margin-bottom: 0;
-}
-::v-deep .el-dialog__header{
-    border-bottom: 1px solid var(--colorBorder-theme);
-}
+    ::v-deep .el-form-item {
+        margin-bottom: 0;
+    }
+    ::v-deep .el-dialog__header{
+        border-bottom: 1px solid var(--colorBorder-theme);
+    }
 </style>

@@ -38,11 +38,11 @@ export default {
 </script>
 
 <style scoped>
-.root{
-    height: 100%;
-}
-.bm-view{
-    height: 100%;
-    width: 100%;
-}
+    .root{
+        height: 100%;
+    }
+    .bm-view{
+        height: 100%;
+        width: 100%;
+    }
 </style>

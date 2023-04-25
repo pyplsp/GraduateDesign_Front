@@ -73,6 +73,8 @@
 </template>
 
 <script>
+import {_alarmUnlock} from "@/network/api/apiAlarm";
+
 export default {
     name: "alarmDetail",
     props:{
@@ -88,10 +90,15 @@ export default {
     },
     methods:{
         unLock(){
-
+            _alarmUnlock(this.detailData.id).then(res =>{
+                if (res.data.code === 200){
+                    this.$emit("closeDialogAndRefresh")
+                    this.$message.success("成功解除告警")
+                }
+            })
         },
         close(){
-
+            this.$emit("closeDialog")
         }
 
     },
@@ -100,28 +107,28 @@ export default {
 </script>
 
 <style scoped>
-.btn {
-    background-color: var(--colorBackground-theme);
-    padding: 5px 10px;
-    margin-bottom: 20px;
-}
-.baseData {
-    margin: 20px 0;
-}
-.btn, .position > div, .baseData > div {
-    margin-top: 10px;
-}
-::v-deep .el-input__inner{
-    border: none;
-}
-::v-deep .el-input.is-disabled .el-input__inner{
-    background: none;
-}
-::v-deep .el-textarea__inner{
-    border: none;
-}
-::v-deep .el-textarea.is-disabled .el-textarea__inner{
-    border: none;
-    background: none;
-}
+    .btn {
+        background-color: var(--colorBackground-theme);
+        padding: 5px 10px;
+        margin-bottom: 20px;
+    }
+    .baseData {
+        margin: 20px 0;
+    }
+    .btn, .position > div, .baseData > div {
+        margin-top: 10px;
+    }
+    ::v-deep .el-input__inner{
+        border: none;
+    }
+    ::v-deep .el-input.is-disabled .el-input__inner{
+        background: none;
+    }
+    ::v-deep .el-textarea__inner{
+        border: none;
+    }
+    ::v-deep .el-textarea.is-disabled .el-textarea__inner{
+        border: none;
+        background: none;
+    }
 </style>

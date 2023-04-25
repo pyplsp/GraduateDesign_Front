@@ -10,8 +10,12 @@ export function _alarmData(params,json){
     })
 }
 
+// 查询单个记录
 export function _alarmDataById(id){
     return baseReq(true).get("alarm/" + id);
 }
 
+export function _alarmUnlock(id){
+    return baseReq(true).get("alarm/unlock/" + id);
+}
 

@@ -12,10 +12,9 @@ import '@/assets/css/normalize.css'
 import './theme/index.css'
 import router from "./router";
 import store from "@/store/store"
-import _store from './utils/store';
-
-
-Vue.prototype._store = _store;
+import 'echarts'
+import ECharts from 'vue-echarts'
+Vue.component('VueEcharts', ECharts)
 
 NProgress.configure({
   easing: 'ease',

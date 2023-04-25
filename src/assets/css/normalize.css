@@ -23,6 +23,7 @@ html {
 body {
     margin: 0;
     min-width: 1450px;
+    min-height: 770px;
 }
 
 /**

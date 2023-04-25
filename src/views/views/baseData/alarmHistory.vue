@@ -63,12 +63,12 @@
                         <span v-else-if="scope.row.alarmStatus === 0" style="color: var(--colorCorrect-theme)">
                             自动解除
                         </span>
-                        <span v-else-if="scope.row.alarmStatus === -1">
+                        <span v-else-if="scope.row.alarmStatus === -1" style="color: var(--colorActive-theme)">
                             手动解除
                         </span>
                     </template>
                 </el-table-column>
-                <el-table-column label="当前人数" >
+                <el-table-column label="人数" >
                     <template slot-scope="scope">
                         <span>{{ scope.row.personNum }} 人</span>
                     </template>
@@ -104,7 +104,9 @@
             width="1064px"
             :close-on-click-modal="false">
             <alarm-detail
-                :detail-data="detailData">
+                :detail-data="detailData"
+                @closeDialog="closeDialog"
+                @closeDialogAndRefresh="closeDialogAndRefresh">
 
             </alarm-detail>
         </el-dialog>
@@ -182,6 +184,13 @@ export default {
                 this.loading = false
             })
         },
+        closeDialog(){
+            this.detailDialogVisible = false;
+        },
+        closeDialogAndRefresh(){
+            this.detailDialogVisible = false;
+            this.refresh()
+        },
     },
     created() {
         this.getAlarmData()
@@ -190,33 +199,33 @@ export default {
 </script>
 
 <style scoped>
-.search {
-    margin: 10px;
-}
+    .search {
+        margin: 10px;
+    }
 
-.table {
-    margin: 10px;
-    padding: 10px;
-    background-color: white;
-}
+    .table {
+        margin: 10px;
+        padding: 10px;
+        background-color: white;
+    }
 
-.title {
-    margin: 10px 0 20px 0;
-    display: flex;
-    line-height: 28px;
-}
+    .title {
+        margin: 10px 0 20px 0;
+        display: flex;
+        line-height: 28px;
+    }
 
-.title > div {
-    padding: 0 8px;
-}
+    .title > div {
+        padding: 0 8px;
+    }
 
-.pagination {
-    margin-top: 20px;
-}
-::v-deep .el-form-item {
-    margin-bottom: 0;
-}
-::v-deep .el-dialog__header{
-    border-bottom: 1px solid var(--colorBorder-theme);
-}
+    .pagination {
+        margin-top: 20px;
+    }
+    ::v-deep .el-form-item {
+        margin-bottom: 0;
+    }
+    ::v-deep .el-dialog__header{
+        border-bottom: 1px solid var(--colorBorder-theme);
+    }
 </style>
