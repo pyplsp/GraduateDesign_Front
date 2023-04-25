@@ -34,6 +34,9 @@
             <div class="title">
                 <div>电梯档案信息</div>
                 <div>
+                    <el-button size="mini" plain @click="refresh">刷新</el-button>
+                </div>
+                <div>
                     <el-button size="mini" type="primary" plain @click="addLift" :loading="loading">新增</el-button>
                 </div>
             </div>
@@ -213,6 +216,9 @@ export default {
         clear(){
             this.formInline.liftCode = ""
             this.formInline.liftName = ""
+        },
+        refresh(){
+            this.axiosGetLiftData(false)
         }
     },
     created() {

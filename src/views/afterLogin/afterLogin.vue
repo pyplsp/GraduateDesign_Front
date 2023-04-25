@@ -155,7 +155,6 @@ export default {
     },
     mounted() {
         this.connectMqtt()
-
     },
 }
 </script>

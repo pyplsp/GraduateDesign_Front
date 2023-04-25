@@ -9,3 +9,9 @@ export function _alarmData(params,json){
         },
     })
 }
+
+export function _alarmDataById(id){
+    return baseReq(true).get("alarm/" + id);
+}
+
+

@@ -15,7 +15,7 @@
                         <el-option label="已解除" value="0"></el-option>
                         <el-option label="未解除" value="1"></el-option>
                     </el-select>
-                </el-form-item>
+                    </el-form-item>
                 <el-form-item style="text-align: right">
                     <el-button type="primary" @click="search" plain>查询</el-button>
                 </el-form-item>
@@ -27,22 +27,24 @@
         <!--电梯设备展示列表-->
         <div class="table">
             <div class="title">
-                <div>电梯档案信息</div>
+                <div>告警记录</div>
                 <div>
-                    <el-button size="mini" type="primary" plain @click="refresh">刷新</el-button>
+                    <el-button size="mini" plain @click="refresh">刷新</el-button>
                 </div>
             </div>
             <el-table :data="tableData" style="width: 100%" max-height="700" border size="small" v-loading="loading">
                 <el-table-column label="设备代码" >
                     <template slot-scope="scope">
-                        <a @click="" style="color: #1890ff;cursor: pointer">{{ scope.row.liftCode }}</a>
+                        <a @click="checkDetail(scope.row.id)" style="color: #1890ff;cursor: pointer">
+                            {{ scope.row.liftCode }}
+                        </a>
                     </template>
                 </el-table-column>
                 <el-table-column label="告警类型" >
                     <template slot-scope="scope">
                         <a @click="">{{ scope.row.alarmTypeName }}</a>
                     </template>
-                </el-table-column>
+                 </el-table-column>
                 <el-table-column label="发生时间" >
                     <template slot-scope="scope">
                         <span>{{ scope.row.alarmTime }}</span>
@@ -55,8 +57,15 @@
                 </el-table-column>
                 <el-table-column label="状态" >
                     <template slot-scope="scope">
-                        <span v-if="scope.row.alarmStatus" style="color: var(--colorError-theme)">未解除</span>
-                        <span v-else style="color: var(--colorCorrect-theme)">已解除</span>
+                        <span v-if="scope.row.alarmStatus === 1" style="color: var(--colorError-theme)">
+                            未解除
+                        </span>
+                        <span v-else-if="scope.row.alarmStatus === 0" style="color: var(--colorCorrect-theme)">
+                            自动解除
+                        </span>
+                        <span v-else-if="scope.row.alarmStatus === -1">
+                            手动解除
+                        </span>
                     </template>
                 </el-table-column>
                 <el-table-column label="当前人数" >
@@ -87,14 +96,29 @@
             </div>
         </div>
 
+        <!--自定义弹出框：电梯详情与编辑-->
+        <el-dialog
+            :destroy-on-close="true"
+            title="设备详细信息"
+            :visible.sync="detailDialogVisible"
+            width="1064px"
+            :close-on-click-modal="false">
+            <alarm-detail
+                :detail-data="detailData">
+
+            </alarm-detail>
+        </el-dialog>
+
     </div>
 </template>
 
 <script>
-import {_alarmData} from "@/network/api/apiAlarm";
+import {_alarmData, _alarmDataById} from "@/network/api/apiAlarm";
+import AlarmDetail from "@/components/baseData/alarmDetail";
 
 export default {
     name: "alarmHistory",
+    components: {AlarmDetail},
     data(){
         return{
             formInline: {
@@ -105,10 +129,12 @@ export default {
             tableData:[],
             loading:true,
             pagination: {
-                size: 1,
+                size: 10,
                 current: 1,
                 total: 0
             },
+            detailDialogVisible:false,
+            detailData:{},
         }
     },
     methods:{
@@ -141,8 +167,21 @@ export default {
             this.getAlarmData()
         },
         refresh(){
-
-        }
+            this.loading = true
+            this.getAlarmData()
+        },
+        checkDetail(id){
+            this.loading = true
+            _alarmDataById(id).then(res =>{
+                if (res.data.code === 200) {
+                    this.detailData = res.data.data
+                    this.detailDialogVisible=true;
+                }
+                this.loading = false
+            }).catch(()=>{
+                this.loading = false
+            })
+        },
     },
     created() {
         this.getAlarmData()

@@ -87,12 +87,6 @@ export default {
         detailData: {
             type: Object,
             require: true,
-            default: function () {
-                return {
-                    // positionX:112.000,
-                    // positionY:38.000
-                }
-            }
         }
     },
     data() {

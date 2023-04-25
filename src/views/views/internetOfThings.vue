@@ -34,9 +34,8 @@
             <div class="title">
                 <div>物联网信息</div>
                 <div>
-                    <el-button size="mini" type="primary" plain :loading="loading">更新</el-button>
+                    <el-button size="mini" type="primary" @click="refresh" plain>刷新</el-button>
                 </div>
-
             </div>
             <el-table :data="tableData" style="width: 100%" max-height="700" border size="small" v-loading="loading">
                 <el-table-column label="设备代码" >
@@ -141,7 +140,7 @@ export default {
                 internetStatus:1
             },
             pagination: {
-                size: 15,
+                size: 10,
                 current: 1,
                 total: 0
             },
@@ -209,7 +208,10 @@ export default {
         openVideo(liftCode){
             this.nowLIftCode = liftCode
             this.videoDialogVisible = true
-        }
+        },
+        refresh(){
+            this.axiosGetLiftData(false)
+        },
     },
     created() {
         this.ifAdministrator = Number(localStorage.getItem("Administrator"));
