@@ -162,7 +162,6 @@ export default {
     }
     #afterLogin{
         height: 100vh;
-        min-height: 770px;
         display: flex;
         overflow: hidden;
     }
