@@ -34,7 +34,7 @@
             <div class="title">
                 <div>物联网信息</div>
                 <div>
-                    <el-button size="mini" type="primary" @click="refresh" plain>刷新</el-button>
+                    <el-button size="mini" @click="refresh" plain>刷新</el-button>
                 </div>
             </div>
             <el-table :data="tableData" style="width: 100%" max-height="700" border size="small" v-loading="loading">

@@ -3,7 +3,7 @@
         <div>
             <span>操作</span>
             <div class="btn">
-                <el-button type="primary" size="mini" plain @click="unLock" v-if="detailData.alarmStatus === 1">
+                <el-button type="primary" size="mini" plain @click="unLock" v-if="detailData.alarmStatus === 1 && !ifAdministrator">
                     标记为已解除
                 </el-button>
                 <el-button size="mini" @click="close()">关闭</el-button>
@@ -63,7 +63,13 @@
                         告警事件名称
                     </template>
                     <span>{{detailData.alarmTypeName}}</span>
-
+                </el-descriptions-item>
+                <el-descriptions-item>
+                    <template slot="label">
+                        <i class="el-icon-location-outline"></i>
+                        所属单位
+                    </template>
+                    <span>{{detailData.unitName}}</span>
                 </el-descriptions-item>
             </el-descriptions>
         </div>
@@ -81,7 +87,11 @@ export default {
         detailData: {
             type: Object,
             require: true,
-        }
+        },
+        ifAdministrator:{
+            type:Number,
+            require: true
+        },
     },
     data(){
         return{

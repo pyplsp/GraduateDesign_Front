@@ -40,11 +40,16 @@
                         </a>
                     </template>
                 </el-table-column>
+                <el-table-column label="所属单位" >
+                    <template slot-scope="scope">
+                        <span>{{ scope.row.unitName }}</span>
+                    </template>
+                </el-table-column>
                 <el-table-column label="告警类型" >
                     <template slot-scope="scope">
-                        <a @click="">{{ scope.row.alarmTypeName }}</a>
+                        <span>{{ scope.row.alarmTypeName }}</span>
                     </template>
-                 </el-table-column>
+                </el-table-column>
                 <el-table-column label="发生时间" >
                     <template slot-scope="scope">
                         <span>{{ scope.row.alarmTime }}</span>
@@ -105,6 +110,7 @@
             :close-on-click-modal="false">
             <alarm-detail
                 :detail-data="detailData"
+                :if-administrator="ifAdministrator"
                 @closeDialog="closeDialog"
                 @closeDialogAndRefresh="closeDialogAndRefresh">
 
@@ -123,6 +129,7 @@ export default {
     components: {AlarmDetail},
     data(){
         return{
+            ifAdministrator: 0,
             formInline: {
                 liftCode: "",
                 alarmTypeName:"",
@@ -193,6 +200,7 @@ export default {
         },
     },
     created() {
+        this.ifAdministrator = Number(localStorage.getItem("Administrator"));
         this.getAlarmData()
     }
 }

@@ -53,7 +53,7 @@
                     <br />
                     <div>
                         <span v-if="subAlarm">告警已订阅 <span class="el-icon-success" style="color: #5affa0"></span></span>
-                        <span v-else>告警未订阅 <span class="el-icon-success" style="color: #ff5454"></span></span>
+                        <span v-if="!ifAdministrator && !subAlarm">告警未订阅 <span class="el-icon-success" style="color: #ff5454"></span></span>
                     </div>
                 </el-card>
             </div>
@@ -69,6 +69,7 @@ export default {
     name: "afterLogin",
     data(){
         return{
+            ifAdministrator: 0,
             nowIndex:'',
             myMap:new Map([
                 ['1','overview'],
@@ -82,6 +83,7 @@ export default {
 
             connectNet:false,
             subAlarm:false,
+
         }
     },
     methods: {
@@ -105,12 +107,12 @@ export default {
                                     title: '告警解除',
                                     dangerouslyUseHTMLString: true,
                                     message: `
-                                        <div>设备代码：${payload.liftIDNo}</div>
-                                        <div>解除时间：${payload.alarmTime}</div>
-                                        <div>告警类型：${payload.alarmTypeName}</div>
-                                        <br />
-                                        <div>请转到<a style="color: var(--colorActive-theme)">告警记录</a>界面查看详情</div>
-                                    `,
+                                    <div>设备代码：${payload.liftIDNo}</div>
+                                    <div>解除时间：${payload.alarmTime}</div>
+                                    <div>告警类型：${payload.alarmTypeName}</div>
+                                    <br />
+                                    <div>请转到<a style="color: var(--colorActive-theme)">告警记录</a>界面查看详情</div>
+                                `,
                                     duration: 0,
                                 });
                             }else{
@@ -119,12 +121,12 @@ export default {
                                     title: '告警提示',
                                     dangerouslyUseHTMLString: true,
                                     message: `
-                                        <div>设备代码：${payload.liftIDNo}</div>
-                                        <div>发生时间：${payload.alarmTime}</div>
-                                        <div>告警类型：${payload.alarmTypeName}</div>
-                                        <br />
-                                        <div>请转到<a style="color: var(--colorActive-theme)">告警记录</a>界面查看详情</div>
-                                    `,
+                                    <div>设备代码：${payload.liftIDNo}</div>
+                                    <div>发生时间：${payload.alarmTime}</div>
+                                    <div>告警类型：${payload.alarmTypeName}</div>
+                                    <br />
+                                    <div>请转到<a style="color: var(--colorActive-theme)">告警记录</a>界面查看详情</div>
+                                `,
                                     duration: 0,
                                 });
                             }
@@ -137,11 +139,14 @@ export default {
             this.$store.commit("mqttClientConnect")
             this.$store.state.mqttClient.on('connect',()=>{
                 this.connectNet = true
-                this.subscribe('ALARM/' + localStorage.getItem('userId'))
+                if(this.ifAdministrator !== 1){
+                    this.subscribe('ALARM/' + localStorage.getItem('userId'))
+                }
             })
         },
     },
     created() {
+        this.ifAdministrator = Number(localStorage.getItem("Administrator"));
         let path = this.$route.path.split('/')
         let temp = new Map(
             Array.from(this.myMap.entries()).map(([key, value]) => [value, key])
@@ -166,6 +171,7 @@ export default {
         overflow: hidden;
     }
     #content{
+        min-height: 750px;
         flex: 1;
         padding:10px 0 10px 10px;
         position: relative;
@@ -184,6 +190,7 @@ export default {
         width: 200px;
         height: 100%;
         background-color: #545c64;
+        min-height: 750px;
     }
     #myN{
         height: 70%;
@@ -198,6 +205,7 @@ export default {
         color: white;
         padding: 10px;
         box-sizing: border-box;
+
     }
     .refresh{
         float: right;

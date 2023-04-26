@@ -36,7 +36,7 @@
                 <div>
                     <el-button size="mini" plain @click="refresh">刷新</el-button>
                 </div>
-                <div>
+                <div v-if="!ifAdministrator">
                     <el-button size="mini" type="primary" plain @click="addLift" :loading="loading">新增</el-button>
                 </div>
             </div>
