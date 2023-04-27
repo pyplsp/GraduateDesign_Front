@@ -20,7 +20,6 @@ export function _addLift(json){
     return baseReq(true).post('lift/',json)
 }
 
-
 // 提交电梯修改信息
 export function _modifyLift(id,json){
     return baseReq(true).put('lift/' + id,json)
