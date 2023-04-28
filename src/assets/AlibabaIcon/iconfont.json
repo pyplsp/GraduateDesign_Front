@@ -6,6 +6,41 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "1727278",
+      "name": "09安全、保障",
+      "font_class": "anquanbaozhang",
+      "unicode": "e88c",
+      "unicode_decimal": 59532
+    },
+    {
+      "icon_id": "1973044",
+      "name": "多文件",
+      "font_class": "duowenjian",
+      "unicode": "e610",
+      "unicode_decimal": 58896
+    },
+    {
+      "icon_id": "2477519",
+      "name": "消防电梯",
+      "font_class": "xiaofangdianti",
+      "unicode": "e609",
+      "unicode_decimal": 58889
+    },
+    {
+      "icon_id": "8989216",
+      "name": "数据看板",
+      "font_class": "shujukanban",
+      "unicode": "e607",
+      "unicode_decimal": 58887
+    },
+    {
+      "icon_id": "11372655",
+      "name": "地图",
+      "font_class": "ditu",
+      "unicode": "e8ad",
+      "unicode_decimal": 59565
+    },
+    {
       "icon_id": "1315275",
       "name": "Loading",
       "font_class": "91jiazai",

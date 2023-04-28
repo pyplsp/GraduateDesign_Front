@@ -13,27 +13,48 @@
                             @select="isSelect"
                             active-text-color="#ffd04b">
                             <el-menu-item index="1">
-                                <span slot="title">数据概览</span>
+                                <span slot="title">
+                                    <span class="iconfont icon-zhexiantu"></span>
+                                    数据概览
+                                </span>
                             </el-menu-item>
                             <el-submenu index="2">
                                 <template slot="title">
-                                    <span>电梯数据</span>
+                                    <span>
+                                        <span class="iconfont icon-xiaofangdianti"></span>
+                                        电梯数据
+                                    </span>
                                 </template>
                                 <el-menu-item index="2-1">
-                                    <span slot="title">电梯档案</span>
+                                    <span slot="title">
+                                        <span class="iconfont icon-duowenjian"></span>
+                                        电梯档案
+                                    </span>
                                 </el-menu-item>
                                 <el-menu-item index="2-2">
-                                    <span slot="title">电梯位置</span>
+                                    <span slot="title">
+                                        <span class="iconfont icon-ditu"></span>
+                                        电梯位置
+                                    </span>
                                 </el-menu-item>
                                 <el-menu-item index="2-3">
-                                    <span slot="title">告警记录</span>
+                                    <span slot="title">
+                                        <span class="iconfont icon-jinggao"></span>
+                                        告警记录
+                                    </span>
                                 </el-menu-item>
                             </el-submenu>
                             <el-menu-item index="3">
-                                <span slot="title">物联网</span>
+                                <span slot="title">
+                                    <span class="iconfont icon-monitor-camera-full"></span>
+                                    物联网
+                                </span>
                             </el-menu-item>
                             <el-menu-item index="4">
-                                <span slot="title">设置</span>
+                                <span slot="title">
+                                    <span class="iconfont icon-gearmore"></span>
+                                    设置
+                                </span>
                             </el-menu-item>
                         </el-menu>
                     </el-col>
@@ -160,11 +181,6 @@ export default {
 </script>
 
 <style scoped>
-    .iconfont{
-        padding: 0 8px;
-        font-size: 20px;
-        color: #909399;
-    }
     #afterLogin{
         height: 100vh;
         display: flex;

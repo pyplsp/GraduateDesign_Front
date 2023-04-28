@@ -1,7 +1,9 @@
 <template>
     <div id="root">
         <el-card class="info">
-            <div slot="header" class="clearfix">用户信息详情</div>
+            <div slot="header" class="clearfix">
+                用户信息详情
+            </div>
             <el-descriptions border>
                 <el-descriptions-item label="用户名">{{user.account}}</el-descriptions-item>
                 <el-descriptions-item label="手机号">{{user.phoneNumber}}</el-descriptions-item>
@@ -10,11 +12,15 @@
                     {{user.description}}
                 </el-descriptions-item>
                 <el-descriptions-item label="账户类型">
-                        {{user.ifAdministrators ? '管理员':'普通单位'}}
+                        <span v-show="user.ifAdministrators !== null">{{user.ifAdministrators ? '管理员':'普通单位'}}</span>
+                </el-descriptions-item>
+                <el-descriptions-item label="查看密码">
+                    <el-input :value="user.password" show-password></el-input>
                 </el-descriptions-item>
                 <el-descriptions-item label="操作">
-                    <el-button type="primary" size="mini" @click="out">退出登录</el-button>
-                    <el-button type="primary" size="mini" @click="passwordC">修改密码</el-button>
+                    <el-button type="primary" size="mini" @click="">编辑信息</el-button>
+                    <el-button size="mini" @click="passwordC">修改密码</el-button>
+                    <el-button type="danger" size="mini" @click="out">退出登录</el-button>
                 </el-descriptions-item>
             </el-descriptions>
         </el-card>
@@ -55,12 +61,12 @@ export default {
             })
         },
         passwordC(){
-            this.$prompt('提示', '修改密码', {
+            this.$prompt('新密码', '', {
                 confirmButtonText: '确定',
                 cancelButtonText: '取消',
                 inputType:'password',
-                // inputPattern: /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/,
-                inputErrorMessage: '格式不正确'
+                inputPattern: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+                inputErrorMessage: '密码要求至少包含一个字母，一个数字，8位以上'
             }).then(({ value }) => {
                 _psc(value).then(res =>{
                     if(res.data.code === 200){
@@ -87,5 +93,8 @@ export default {
     .clearfix{
         font-weight: 900;
         opacity: 0.6;
+    }
+    ::v-deep .el-input__inner{
+        border: none;
     }
 </style>

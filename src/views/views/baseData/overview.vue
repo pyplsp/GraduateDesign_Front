@@ -257,7 +257,7 @@ export default {
         color: #55e196;
     }
     .icon-jinggao{
-        color: red;
+        color: #ff6868;
     }
     .icon-lifangtilitiduomiantifangkuai2{
         color: #ffec00;
