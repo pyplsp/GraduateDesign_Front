@@ -14,7 +14,7 @@ export default {
         }
     },
     created() {
-        console.log(this.liftCode)
+
     },
     mounted() {
         if(flvJs.isSupported()){

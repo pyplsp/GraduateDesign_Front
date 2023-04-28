@@ -89,7 +89,7 @@ export default {
             require: true,
         },
         ifAdministrator:{
-            type:Number,
+            type:Boolean,
             require: true
         },
     },

@@ -12,10 +12,17 @@
                 <el-form-item label="告警状态">
                     <el-select v-model="formInline.alarmStatus" placeholder="告警状态" @change="search">
                         <el-option label="全部" :value = null></el-option>
-                        <el-option label="已解除" value="0"></el-option>
+                        <el-option label="手动解除" value="-1"></el-option>
+                        <el-option label="自动解除" value="0"></el-option>
                         <el-option label="未解除" value="1"></el-option>
                     </el-select>
                     </el-form-item>
+                <el-form-item label="所属用户" v-show="ifAdministrator">
+                    <el-select v-model="formInline.userId" placeholder="所属用户" @change="search">
+                        <el-option label="全部" value = "0"></el-option>
+                        <el-option :label="item.unitName" :value="item.id" v-for="(item,index) in unitName"></el-option>
+                    </el-select>
+                </el-form-item>
                 <el-form-item style="text-align: right">
                     <el-button type="primary" @click="search" plain>查询</el-button>
                 </el-form-item>
@@ -123,17 +130,19 @@
 <script>
 import {_alarmData, _alarmDataById} from "@/network/api/apiAlarm";
 import AlarmDetail from "@/components/baseData/alarmDetail";
+import {_unitName} from "@/network/api/apiUser";
 
 export default {
     name: "alarmHistory",
     components: {AlarmDetail},
     data(){
         return{
-            ifAdministrator: 0,
+            ifAdministrator: false,
             formInline: {
                 liftCode: "",
                 alarmTypeName:"",
                 alarmStatus:null,
+                userId: "0",
             },
             tableData:[],
             loading:true,
@@ -144,6 +153,7 @@ export default {
             },
             detailDialogVisible:false,
             detailData:{},
+            unitName:[],
         }
     },
     methods:{
@@ -198,9 +208,18 @@ export default {
             this.detailDialogVisible = false;
             this.refresh()
         },
+        axiosUnitName(){
+            _unitName().then(res =>{
+                if(res.data.code === 200){
+                    this.unitName = res.data.data
+                }
+            })
+        },
     },
     created() {
-        this.ifAdministrator = Number(localStorage.getItem("Administrator"));
+        this.ifAdministrator = (localStorage.getItem("userId") === '1');
+        if (this.ifAdministrator)
+            this.axiosUnitName()
         this.getAlarmData()
     }
 }
@@ -222,7 +241,10 @@ export default {
         display: flex;
         line-height: 28px;
     }
-
+    .title > div:first-child{
+        font-weight: 900;
+        opacity: 0.6;
+    }
     .title > div {
         padding: 0 8px;
     }

@@ -23,7 +23,6 @@ export default {
         checkDetail (id) {
             _liftDataById(id).then(res =>{
                 if (res.data.code === 200){
-                    console.log(res.data.data)
                     this.show = true
                 }
             })

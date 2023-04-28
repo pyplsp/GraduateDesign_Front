@@ -3,8 +3,43 @@
         <div>
             <el-card class="baseData">
                 <div slot="header" class="clearfix">基本数据</div>
-                <div>
-
+                <div class="inBaseData">
+                    <div>
+                        <span class="iconfont icon-dianti"></span>
+                        <div class="word">
+                            <div>
+                                <p>电梯数量</p>
+                                <p v-loading="loading">{{ liftNum }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <span class="iconfont icon-monitor-camera-full"></span>
+                        <div class="word">
+                            <div>
+                                <p>电梯物联网数量</p>
+                                <p v-loading="loading">{{ internetNum }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <span class="iconfont icon-jinggao"></span>
+                        <div class="word">
+                            <div>
+                                <p>告警数量</p>
+                                <p v-loading="loading">{{ alarmNum }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <span class="iconfont icon-lifangtilitiduomiantifangkuai2"></span>
+                        <div class="word">
+                            <div>
+                                <p>告警移除数量</p>
+                                <p v-loading="loading">{{ alarmRemoveNum }}</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </el-card>
         </div>
@@ -51,12 +86,19 @@ export default {
     name: "overview",
     data(){
         return{
+            // 基础数据
+            liftNum:null,
+            internetNum:null,
+            alarmNum:null,
+            alarmRemoveNum:null,
+            // 趋势图
             alarmTender:{},
             alarmRemoveTender:{},
+            // 饼图
             liftTypePie:{},
             alarmTypePie:{},
             alarmStatusPie:{},
-            overviewData:null,
+            // 加载状态位
             loading:true,
         }
     },
@@ -119,7 +161,8 @@ export default {
                 series:{
                     type: 'pie',
                     minAngle: 4,
-                    radius: ['50%', '80%'],
+                    radius: ['50%', '70%'],
+                    center:['50%','60%'],
                     data: [],
                     itemStyle: {
                         normal: {
@@ -139,6 +182,11 @@ export default {
         this.alarmStatusPie = this.pieConfig()
         _overview().then(res =>{
             if(res.data.code === 200){
+                // 基础数据
+                this.liftNum = res.data.data.liftNum
+                this.internetNum = res.data.data.internetNum
+                this.alarmNum = res.data.data.alarmNum
+                this.alarmRemoveNum = res.data.data.alarmRemoveNum
                 // 告警趋势
                 let alarmTenderLists = this.mapToLists(res.data.data.alarmTender,"date","count")
                 this.alarmTender.xAxis.data = alarmTenderLists[0].map(this.changeDate)
@@ -149,10 +197,20 @@ export default {
                 this.alarmRemoveTender.series[0].data = alarmRemoveTenderLists[1]
                 // 电梯类型饼图
                 this.liftTypePie.series.data = this.mapToMap(res.data.data.liftTypePie,"liftTypeName","count")
+                // 告警类型饼图
                 this.alarmTypePie.series.data = this.mapToMap(res.data.data.alarmTypePie,"alarmTypeName","count")
-                this.alarmStatusPie.series.data = this.mapToMap(res.data.data.alarmStatusPie,"alarmStatus","count")
+                // 告警状态饼图
+                let status = this.mapToMap(res.data.data.alarmStatusPie,"alarmStatus","count")
+                for (const ele of status) {
+                     ele.name = (ele.name === -1 ? '手动解除' : ele.name === 0 ? '自动解除' : '未解除')
+                }
+                this.alarmStatusPie.series.data = status
+                // 解除加载
                 this.loading = false
             }
+        }).catch(()=>{
+            this.$message.error('网络错误')
+            this.loading = false
         })
     }
 
@@ -171,6 +229,51 @@ export default {
     .el-card{
         height: 100%;
         box-shadow: none;
+    }
+    .clearfix{
+        font-weight: 900;
+        opacity: 0.6;
+    }
+    .inBaseData{
+        height: 100%;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+        grid-gap: 10px;
+    }
+    .inBaseData >div{
+        display: flex;
+    }
+    .iconfont{
+        font-size: 3rem;
+        display: block;
+        margin: auto;
+        flex: 1;
+    }
+    .icon-dianti{
+        color: #54f8f8;
+    }
+    .icon-monitor-camera-full{
+        color: #55e196;
+    }
+    .icon-jinggao{
+        color: red;
+    }
+    .icon-lifangtilitiduomiantifangkuai2{
+        color: #ffec00;
+    }
+    .word{
+        flex: 2;
+        text-align: center;
+        margin: auto;
+        color: var(--colorActive-theme);
+    }
+    .word p:first-child{
+
+    }
+    .word p:last-child{
+        font-size: 25px;
+        font-weight: 900;
     }
     ::v-deep .el-card__header{
         height: 12%;

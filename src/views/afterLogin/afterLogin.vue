@@ -69,7 +69,7 @@ export default {
     name: "afterLogin",
     data(){
         return{
-            ifAdministrator: 0,
+            ifAdministrator: false,
             nowIndex:'',
             myMap:new Map([
                 ['1','overview'],
@@ -139,14 +139,14 @@ export default {
             this.$store.commit("mqttClientConnect")
             this.$store.state.mqttClient.on('connect',()=>{
                 this.connectNet = true
-                if(this.ifAdministrator !== 1){
+                if(!this.ifAdministrator){
                     this.subscribe('ALARM/' + localStorage.getItem('userId'))
                 }
             })
         },
     },
     created() {
-        this.ifAdministrator = Number(localStorage.getItem("Administrator"));
+        this.ifAdministrator = (localStorage.getItem("userId") === '1');
         let path = this.$route.path.split('/')
         let temp = new Map(
             Array.from(this.myMap.entries()).map(([key, value]) => [value, key])
@@ -173,18 +173,14 @@ export default {
     #content{
         min-height: 750px;
         flex: 1;
-        padding:10px 0 10px 10px;
+        padding:10px 10px 10px 10px;
         position: relative;
         box-sizing: border-box;
         overflow-y: scroll;
         background-color: var(--colorBackground-theme);
     }
     #content::-webkit-scrollbar{
-        width: 10px;
-    }
-    #content::-webkit-scrollbar-thumb {
-        border-radius: 20px;
-        background: var(--colorActive-theme);
+        display: none;
     }
     #nav{
         width: 200px;

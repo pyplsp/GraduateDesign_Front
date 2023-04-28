@@ -123,7 +123,7 @@ export default {
     components: {AddLift, LiftDetail,},
     data() {
         return {
-            ifAdministrator: 0,
+            ifAdministrator: false,
             formInline: {
                 liftCode: "",
                 liftName: "",
@@ -222,7 +222,7 @@ export default {
         }
     },
     created() {
-        this.ifAdministrator = Number(localStorage.getItem("Administrator"));
+        this.ifAdministrator = (localStorage.getItem("userId") === '1');
         this.axiosLiftType()
         if (this.ifAdministrator)
             this.axiosUnitName()
@@ -246,6 +246,10 @@ export default {
         margin: 10px 0 20px 0;
         display: flex;
         line-height: 28px;
+    }
+    .title > div:first-child{
+        font-weight: 900;
+        opacity: 0.6;
     }
 
     .title > div {

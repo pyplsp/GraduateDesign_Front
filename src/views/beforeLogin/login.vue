@@ -32,7 +32,6 @@ export default {
             _login(this.userName,this.password).then(res =>{
                 if(res.data.code === 200){
                     localStorage.setItem("Authorization",res.data.data.Authorization)
-                    localStorage.setItem("Administrator",res.data.data.Administrator)
                     localStorage.setItem("userId",res.data.data.userId)
                     this.$router.replace('/afterLogin')
                 }
