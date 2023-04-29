@@ -207,9 +207,12 @@ export default {
                 this.alarmStatusPie.series.data = status
                 // 解除加载
                 this.loading = false
+            }else{
+                // 解除加载
+                this.loading = false
             }
         }).catch(()=>{
-            this.$message.error('网络错误')
+            // 解除加载
             this.loading = false
         })
     }

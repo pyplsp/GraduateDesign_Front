@@ -10,63 +10,65 @@
 
         <div class="baseData">
             <span>基本信息</span>
-            <el-form :model="detailData" :rules="rules" ref="ruleForm">
-                <el-descriptions class="margin-top" :column="3" border>
-                    <el-descriptions-item>
-                        <template slot="label">
-                            <span style="color: red">* </span>
-                            设备代码
-                        </template>
-                        <el-form-item prop="liftCode">
-                            <el-input v-model="detailData.liftCode" placeholder="请输入设备代码"></el-input>
-                        </el-form-item>
-                    </el-descriptions-item>
-                    <el-descriptions-item>
-                        <template slot="label">
-                            <span style="color: red">* </span>
-                            设备名称
-                        </template>
-                        <el-form-item prop="liftName">
-                            <el-input v-model="detailData.liftName" placeholder="请输入设备名称"></el-input>
-                        </el-form-item>
-                    </el-descriptions-item>
-                    <el-descriptions-item>
-                        <template slot="label">
-                            <span style="color: red">* </span>
-                            设备类型
-                        </template>
-                        <el-form-item prop="liftTypeId">
-                            <el-select v-model="detailData.liftTypeId" placeholder="电梯类型">
-                                <el-option :label="item.liftTypeName" :value="item.id" v-for="(item,index) in liftType"></el-option>
-                            </el-select>
-                        </el-form-item>
-                    </el-descriptions-item>
-                    <el-descriptions-item>
-                        <template slot="label">
-                            设备经度
-                        </template>
-                        <el-input v-model="detailData.positionX" placeholder="请输入设备经度"></el-input>
-                    </el-descriptions-item>
-                    <el-descriptions-item>
-                        <template slot="label">
-                            设备纬度
-                        </template>
-                        <el-input v-model="detailData.positionY" placeholder="请输入设备纬度"></el-input>
-                    </el-descriptions-item>
-                    <el-descriptions-item>
-                        <template slot="label">
-                            单位
-                        </template>
-                        本单位，不可编辑
-                    </el-descriptions-item>
-                    <el-descriptions-item>
-                        <template slot="label">
-                            描述
-                        </template>
-                        <el-input  type="textarea" v-model="detailData.description" placeholder="描述"></el-input>
-                    </el-descriptions-item>
-                </el-descriptions>
-            </el-form>
+            <div>
+                <el-form :model="detailData" :rules="rules" ref="ruleForm">
+                    <el-descriptions class="margin-top" :column="3" border>
+                        <el-descriptions-item>
+                            <template slot="label">
+                                <span style="color: red">* </span>
+                                设备代码
+                            </template>
+                            <el-form-item prop="liftCode">
+                                <el-input v-model="detailData.liftCode" placeholder="请输入设备代码"></el-input>
+                            </el-form-item>
+                        </el-descriptions-item>
+                        <el-descriptions-item>
+                            <template slot="label">
+                                <span style="color: red">* </span>
+                                设备名称
+                            </template>
+                            <el-form-item prop="liftName">
+                                <el-input v-model="detailData.liftName" placeholder="请输入设备名称"></el-input>
+                            </el-form-item>
+                        </el-descriptions-item>
+                        <el-descriptions-item>
+                            <template slot="label">
+                                <span style="color: red">* </span>
+                                设备类型
+                            </template>
+                            <el-form-item prop="liftTypeId">
+                                <el-select v-model="detailData.liftTypeId" placeholder="电梯类型">
+                                    <el-option :label="item.liftTypeName" :value="item.id" v-for="(item,index) in liftType" :key="index"></el-option>
+                                </el-select>
+                            </el-form-item>
+                        </el-descriptions-item>
+                        <el-descriptions-item>
+                            <template slot="label">
+                                设备经度
+                            </template>
+                            <el-input v-model="detailData.positionX" placeholder="请输入设备经度"></el-input>
+                        </el-descriptions-item>
+                        <el-descriptions-item>
+                            <template slot="label">
+                                设备纬度
+                            </template>
+                            <el-input v-model="detailData.positionY" placeholder="请输入设备纬度"></el-input>
+                        </el-descriptions-item>
+                        <el-descriptions-item>
+                            <template slot="label">
+                                单位
+                            </template>
+                            本单位，不可编辑
+                        </el-descriptions-item>
+                        <el-descriptions-item>
+                            <template slot="label">
+                                描述
+                            </template>
+                            <el-input  type="textarea" v-model="detailData.description" placeholder="描述"></el-input>
+                        </el-descriptions-item>
+                    </el-descriptions>
+                </el-form>
+            </div>
 
         </div>
     </div>
@@ -127,7 +129,7 @@ export default {
                             });
                             this.close(true)
                         }else{
-                            this.$message.error('添加失败');
+
                         }
                     })
                 } else {

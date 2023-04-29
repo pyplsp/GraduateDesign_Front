@@ -12,13 +12,13 @@
                 <el-form-item label="设备类型">
                     <el-select v-model="formInline.liftTypeId" placeholder="电梯类型" @change="search">
                         <el-option label="全部" value = "0"></el-option>
-                        <el-option :label="item.liftTypeName" :value="item.id" v-for="(item,index) in liftType"></el-option>
+                        <el-option :label="item.liftTypeName" :value="item.id" v-for="(item,index) in liftType" :key="'liftType-'+index"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="所属用户" v-show="ifAdministrator">
                     <el-select v-model="formInline.userId" placeholder="所属用户" @change="search">
                         <el-option label="全部" value = "0"></el-option>
-                        <el-option :label="item.unitName" :value="item.id" v-for="(item,index) in unitName"></el-option>
+                        <el-option :label="item.unitName" :value="item.id" v-for="(item,index) in unitName" :key="'user'+index"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item style="text-align: right">
@@ -40,7 +40,7 @@
                     <el-button size="mini" type="primary" plain @click="addLift" :loading="loading">新增</el-button>
                 </div>
             </div>
-            <el-table :data="tableData" style="width: 100%" max-height="700" border size="small" v-loading="loading">
+            <el-table stripe :data="tableData" style="width: 100%" max-height="700" border size="small" v-loading="loading">
                 <el-table-column label="设备代码" >
                     <template slot-scope="scope">
                         <a @click="checkLiftDetail(scope.row.id)" style="color: #1890ff;cursor: pointer">{{ scope.row.liftCode }}</a>
@@ -260,9 +260,9 @@ export default {
         margin-top: 20px;
     }
 
-    ::v-deep .el-form-item {
-        margin-bottom: 0;
-    }
+    /*::v-deep .el-form-item {*/
+    /*    margin-bottom: 0;*/
+    /*}*/
     ::v-deep .el-dialog__header{
         border-bottom: 1px solid var(--colorBorder-theme);
     }

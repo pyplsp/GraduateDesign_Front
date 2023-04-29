@@ -2,7 +2,7 @@
     <div class="root">
         <baidu-map class="bm-view" :scroll-wheel-zoom="true" center="深圳" :zoom="15">
             <bm-navigation anchor="BMAP_ANCHOR_TOP_RIGHT"></bm-navigation>
-            <bm-marker :position="{lng: item.positionX, lat: item.positionY}" v-for="(item,index) in liftPosition" @click="checkDetail(item.id)" />
+            <bm-marker :position="{lng: item.positionX, lat: item.positionY}" v-for="(item,index) in liftPosition" :key="index" @click="checkDetail(item.id)" />
             <bm-info-window :position="{lng: infoWindow.lng, lat: infoWindow.lat}"
                             :title="infoWindow.title"
                             :show="infoWindow.show"
