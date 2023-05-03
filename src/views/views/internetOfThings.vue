@@ -111,7 +111,7 @@
         :visible.sync="videoDialogVisible"
         width="1064px"
         :close-on-click-modal="false">
-            <video-detail v-if="videoDialogVisible" :lift-code="nowLIftCode" />
+            <video-detail v-if="videoDialogVisible" :flv-url="nowFlvUrl"/>
         </el-dialog>
 
     </div>
@@ -153,6 +153,7 @@ export default {
             realTimeDialogVisible:false,
             videoDialogVisible:false,
 
+            nowFlvUrl:'',
             nowLIftCode:"",
 
             flvPlayer:null
@@ -206,8 +207,27 @@ export default {
             this.realTimeDialogVisible = true
         },
         openVideo(liftCode){
-            this.nowLIftCode = liftCode
-            this.videoDialogVisible = true
+            this.loading = true
+            fetch('http://47.107.228.239:10000/api/v1/stream/start?serial=' + liftCode,{
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            }).then(res => {
+                if(res.status === 200){
+                    // 获取到视频流
+                    return res.json()
+                }else{
+                    // 获取不到视频流
+                    throw new TypeError("we haven't got JSON!");
+                }
+            }).then(data => {
+                this.loading = false
+                this.nowLIftCode = liftCode
+                this.nowFlvUrl = data.FLV
+                this.videoDialogVisible = true
+            }).catch(error => {
+                this.loading = false
+            });
         },
         refresh(){
             this.axiosGetLiftData(false)

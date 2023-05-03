@@ -15,7 +15,7 @@ function setVerify(){
 export function baseReq(ifVerify){
     // 进行基础配置
     const instance = axios.create({
-        baseURL:'http://127.0.0.1:8080/api',
+        baseURL:'http://127.0.0.1:8001/api',
         timeout:8000,
     })
 

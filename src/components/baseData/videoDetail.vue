@@ -9,8 +9,12 @@ import flvJs from "flv.js";
 export default {
     name: "videoDetail",
     props:{
-        liftCode:{
+        flvUrl:{
             type:String
+        },
+        streamId:{
+            type:String,
+            default:null
         }
     },
     created() {
@@ -21,7 +25,7 @@ export default {
             const video = document.getElementById('myVideo');
             this.flvPlayer = flvJs.createPlayer({
                 type: 'flv',
-                url: `https://28181.shenri.net.cn:10010/sms/34020000002020000001/flv/hls/${this.liftCode}_${this.liftCode}.flv` //你的url地址
+                url:this.flvUrl,
             });
             this.flvPlayer.attachMediaElement(video);
             this.flvPlayer.load();
@@ -29,6 +33,10 @@ export default {
         }
     },
     beforeDestroy() {
+        // 带有streamId的是回放，需要关闭
+        if(this.streamId){
+            fetch('http://47.107.228.239:10000/api/v1/playback/stop?streamid='+this.streamId)
+        }
         this.flvPlayer.destroy()
     }
 }

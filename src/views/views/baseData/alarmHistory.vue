@@ -97,6 +97,13 @@
                         <span v-else>未知</span>
                     </template>
                 </el-table-column>
+                <el-table-column label="告警录像">
+                    <template slot-scope="scope">
+                        <div style="text-align: center;">
+                            <span class="iconfont icon-video_camera_" @click="openVideo(scope.row.alarmTime,scope.row.liftCode)"></span>
+                        </div>
+                    </template>
+                </el-table-column>
             </el-table>
             <div class="pagination">
                 <el-pagination
@@ -124,6 +131,16 @@
             </alarm-detail>
         </el-dialog>
 
+
+        <!--自定义弹出框：告警录像-->
+        <el-dialog
+            :title="'告警录像 (' + nowLIftCode + ')'"
+            :visible.sync="videoDialogVisible"
+            width="1064px"
+            :close-on-click-modal="false">
+            <video-detail v-if="videoDialogVisible" :flv-url="nowFlvUrl" :stream-id="nowStreamId"/>
+        </el-dialog>
+
     </div>
 </template>
 
@@ -131,10 +148,11 @@
 import {_alarmData, _alarmDataById} from "@/network/api/apiAlarm";
 import AlarmDetail from "@/components/baseData/alarmDetail";
 import {_unitName} from "@/network/api/apiUser";
+import VideoDetail from "@/components/baseData/videoDetail";
 
 export default {
     name: "alarmHistory",
-    components: {AlarmDetail},
+    components: {VideoDetail, AlarmDetail},
     data(){
         return{
             ifAdministrator: false,
@@ -154,6 +172,12 @@ export default {
             detailDialogVisible:false,
             detailData:{},
             unitName:[],
+
+            nowLIftCode:'',
+            nowFlvUrl:'',
+            nowStreamId:'',
+
+            videoDialogVisible:false,
         }
     },
     methods:{
@@ -215,6 +239,62 @@ export default {
                 }
             })
         },
+        /** YYYY-MM-dd HH:mm:ss 转化为 YYYY-MM-ddTHH:mm:ss */
+        convertDateTime(dateTimeStr) {
+            // 将日期时间字符串中的空格替换为"T"
+            const isoDateTimeStr = dateTimeStr.replace(" ", "T");
+            return isoDateTimeStr;
+        },
+        /** YYYY-MM-ddTHH:mm:ss 时间格式 前进或后退 minutes 分钟 */
+        addMinutes(dateString, minutes) {
+            let date = new Date(dateString);
+            date.setMinutes(date.getMinutes() + minutes);
+            const options = {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false
+            };
+            let dataStr = date.toLocaleString('zh-CN', options).replaceAll('/','-').replace(' ','T')
+            if(!dataStr.includes('T')){
+                dataStr = dataStr.slice(0,10) + 'T'+ dataStr.slice(10)
+            }
+            return dataStr
+        },
+        openVideo(alarmTime,liftCode){
+            this.loading = true
+            const params = {
+                serial:liftCode,
+                starttime:this.addMinutes(this.convertDateTime(alarmTime),-1),
+                endtime:this.addMinutes(this.convertDateTime(alarmTime),1)
+            }
+            const queryString = Object.keys(params).map(key => encodeURIComponent(key) + '=' + encodeURIComponent(params[key])).join('&');
+            fetch('http://47.107.228.239:10000/api/v1/playback/start?' + queryString,{
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            }).then(res => {
+                if(res.status === 200){
+                    // 获取到视频流
+                    return res.json()
+                }else{
+                    // 获取不到视频流
+                    throw new TypeError("we haven't got JSON!");
+                }
+            }).then(data => {
+                this.loading = false
+                this.nowFlvUrl = data.FLV
+                this.nowLIftCode = liftCode
+                this.nowStreamId = data.StreamID
+                this.videoDialogVisible = true
+            }).catch(error => {
+                this.loading = false
+                this.$message.error('获取告警录像失败，告警时间距今过久')
+            });
+        },
     },
     created() {
         this.ifAdministrator = (localStorage.getItem("userId") === '1');
@@ -251,6 +331,10 @@ export default {
 
     .pagination {
         margin-top: 20px;
+    }
+    .icon-video_camera_{
+        color: var(--colorActive-theme);
+        cursor: pointer;
     }
     ::v-deep .el-form-item {
         margin-bottom: 0;
