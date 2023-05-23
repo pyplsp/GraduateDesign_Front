@@ -23,7 +23,7 @@
                 </el-descriptions-item>
             </el-descriptions>
         </el-card>
-        <el-card class="usersManage">
+        <el-card class="usersManage" v-if="ifAdministrator">
             <div slot="header" class="clearfix">
                 <span>账户管理</span>
                 <el-button plain size="mini" @click="refresh">刷新</el-button>
@@ -111,6 +111,7 @@ export default {
                 current: 1,
                 total: 0
             },
+            ifAdministrator: 0,
             tableData:[],
             loading:true,
             dialogVisible:false,
@@ -208,6 +209,7 @@ export default {
         }
     },
     created() {
+        this.ifAdministrator = (localStorage.getItem("userId") === '1');
         this.axiosUserDetail()
         if(localStorage.getItem("userId") === "1"){
             this.axiosGetUsers(this.pagination)
