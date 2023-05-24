@@ -1,6 +1,4 @@
 import axios from 'axios'
-import { Message } from 'element-ui'
-import {showMessage} from '@/utils/utils'
 import router from '@/router/index.js'
 import NProgress from 'nprogress';
 

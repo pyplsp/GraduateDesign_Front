@@ -11,7 +11,7 @@ const store = new Vuex.Store({
         mqttClient:{
             connect:false
         },
-        mqttUrl:'ws://211.159.225.217:8083/mqtt',
+        mqttUrl:'ws://175.178.47.147:8083/mqtt',
         mqttConfig:{
             username: "admin",
             password: "admin",
