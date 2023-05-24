@@ -1,2 +1,1 @@
-# GraduateDesign_Front
-毕业设计前端
+基于MQTT协议的电梯物联网平台设计与实现
