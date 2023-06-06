@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 3955895 */
-  src: url('iconfont.woff2?t=1682705759477') format('woff2'),
-       url('iconfont.woff?t=1682705759477') format('woff'),
-       url('iconfont.ttf?t=1682705759477') format('truetype');
+  src: url('iconfont.woff2?t=1686033626380') format('woff2'),
+       url('iconfont.woff?t=1686033626380') format('woff'),
+       url('iconfont.ttf?t=1686033626380') format('truetype');
 }
 
 .iconfont {
@@ -11,6 +11,54 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-daima:before {
+  content: "\e608";
+}
+
+.icon-naozhong:before {
+  content: "\e648";
+}
+
+.icon-weibiaoti-3:before {
+  content: "\e60a";
+}
+
+.icon-name:before {
+  content: "\e611";
+}
+
+.icon-shijian:before {
+  content: "\e8c5";
+}
+
+.icon-miaoshu:before {
+  content: "\e6ed";
+}
+
+.icon-renshu:before {
+  content: "\e618";
+}
+
+.icon-24gl-building2:before {
+  content: "\e831";
+}
+
+.icon-UI_icon_shijian:before {
+  content: "\e679";
+}
+
+.icon-fuwuleixing:before {
+  content: "\e649";
+}
+
+.icon-icon_danwei:before {
+  content: "\e612";
+}
+
+.icon-naozhong1:before {
+  content: "\e66e";
 }
 
 .icon-anquanbaozhang:before {

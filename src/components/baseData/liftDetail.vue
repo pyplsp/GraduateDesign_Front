@@ -17,49 +17,49 @@
             <el-descriptions class="margin-top" :column="3" border>
                 <el-descriptions-item>
                     <template slot="label">
-                        <i class="el-icon-user"></i>
+                        <i class="iconfont icon-daima"></i>
                         设备代码
                     </template>
                     <el-input :disabled = true v-model="detailData.liftCode"></el-input>
                 </el-descriptions-item>
                 <el-descriptions-item>
                     <template slot="label">
-                        <i class="el-icon-mobile-phone"></i>
+                        <i class="iconfont icon-name"></i>
                         设备名称
                     </template>
                     <el-input :disabled="readyToEditor" v-model="detailData.liftName"></el-input>
                 </el-descriptions-item>
                 <el-descriptions-item>
                     <template slot="label">
-                        <i class="el-icon-location-outline"></i>
+                        <i class="iconfont icon-fuwuleixing"></i>
                         设备类型
                     </template>
                     <el-input :disabled="readyToEditor" v-model="detailData.liftTypeName"></el-input>
                 </el-descriptions-item>
                 <el-descriptions-item>
                     <template slot="label">
-                        <i class="el-icon-tickets"></i>
+                        <i class="iconfont icon-weibiaoti-3"></i>
                         设备经度
                     </template>
                     <el-input :disabled="readyToEditor" v-model="detailData.positionX"></el-input>
                 </el-descriptions-item>
                 <el-descriptions-item>
                     <template slot="label">
-                        <i class="el-icon-tickets"></i>
+                        <i class="iconfont icon-weibiaoti-3"></i>
                         设备纬度
                     </template>
                     <el-input :disabled="readyToEditor" v-model="detailData.positionY"></el-input>
                 </el-descriptions-item>
                 <el-descriptions-item>
                     <template slot="label">
-                        <i class="el-icon-office-building"></i>
+                        <i class="iconfont icon-icon_danwei"></i>
                         所属单位
                     </template>
                     <el-input :disabled = true v-model="detailData.unitName"></el-input>
                 </el-descriptions-item>
                 <el-descriptions-item>
                     <template slot="label">
-                        <i class="el-icon-office-building"></i>
+                        <i class="iconfont icon-miaoshu"></i>
                         描述
                     </template>
                     <el-input  type="textarea" :disabled="readyToEditor" v-model="detailData.description"></el-input>

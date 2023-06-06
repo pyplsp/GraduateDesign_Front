@@ -15,14 +15,14 @@
             <el-descriptions class="margin-top" :column="3" border>
                 <el-descriptions-item>
                     <template slot="label">
-                        <i class="el-icon-user"></i>
+                        <i class="iconfont icon-daima"></i>
                         设备代码
                     </template>
                     <span>{{detailData.liftCode}}</span>
                 </el-descriptions-item>
                 <el-descriptions-item>
                     <template slot="label">
-                        <i class="el-icon-location-outline"></i>
+                        <i class="iconfont icon-layers"></i>
                         是否平层
                     </template>
                     <span v-if="detailData.ifFlat">平层</span>
@@ -31,50 +31,48 @@
                 </el-descriptions-item>
                 <el-descriptions-item>
                     <template slot="label">
-                        <i class="el-icon-location-outline"></i>
+                        <i class="iconfont icon-renshu"></i>
                         人数
                     </template>
                     <span>{{detailData.personNum}} 人</span>
                 </el-descriptions-item>
                 <el-descriptions-item>
                     <template slot="label">
-                        <i class="el-icon-location-outline"></i>
+                        <i class="iconfont icon-naozhong"></i>
                         告警时间
                     </template>
                     <span>{{detailData.alarmTime}}</span>
                 </el-descriptions-item>
                 <el-descriptions-item>
                     <template slot="label">
-                        <i class="el-icon-location-outline"></i>
+                        <i class="iconfont icon-naozhong1"></i>
                         告警移除时间
                     </template>
                     <span>{{detailData.alarmRemoveTime}}</span>
                 </el-descriptions-item>
                 <el-descriptions-item>
                     <template slot="label">
-                        <i class="el-icon-location-outline"></i>
+                        <i class="iconfont icon-24gl-building2"></i>
                         当前楼层
                     </template>
                     <span>{{detailData.currFloor}} 楼</span>
                 </el-descriptions-item>
                 <el-descriptions-item>
                     <template slot="label">
-                        <i class="el-icon-mobile-phone"></i>
+                        <i class="iconfont icon-UI_icon_shijian"></i>
                         告警事件名称
                     </template>
                     <span>{{detailData.alarmTypeName}}</span>
                 </el-descriptions-item>
                 <el-descriptions-item>
                     <template slot="label">
-                        <i class="el-icon-location-outline"></i>
+                        <i class="iconfont icon-icon_danwei"></i>
                         所属单位
                     </template>
                     <span>{{detailData.unitName}}</span>
                 </el-descriptions-item>
             </el-descriptions>
         </div>
-
-
     </div>
 </template>
 

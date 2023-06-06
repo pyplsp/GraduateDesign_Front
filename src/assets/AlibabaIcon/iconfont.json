@@ -6,6 +6,90 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "504566",
+      "name": "代码",
+      "font_class": "daima",
+      "unicode": "e608",
+      "unicode_decimal": 58888
+    },
+    {
+      "icon_id": "629329",
+      "name": "闹钟",
+      "font_class": "naozhong",
+      "unicode": "e648",
+      "unicode_decimal": 58952
+    },
+    {
+      "icon_id": "1236802",
+      "name": "地图",
+      "font_class": "weibiaoti-3",
+      "unicode": "e60a",
+      "unicode_decimal": 58890
+    },
+    {
+      "icon_id": "1336080",
+      "name": "name",
+      "font_class": "name",
+      "unicode": "e611",
+      "unicode_decimal": 58897
+    },
+    {
+      "icon_id": "1727450",
+      "name": "217时间",
+      "font_class": "shijian",
+      "unicode": "e8c5",
+      "unicode_decimal": 59589
+    },
+    {
+      "icon_id": "2733966",
+      "name": "描述",
+      "font_class": "miaoshu",
+      "unicode": "e6ed",
+      "unicode_decimal": 59117
+    },
+    {
+      "icon_id": "6243596",
+      "name": "人数",
+      "font_class": "renshu",
+      "unicode": "e618",
+      "unicode_decimal": 58904
+    },
+    {
+      "icon_id": "7541947",
+      "name": "24gl-building2",
+      "font_class": "24gl-building2",
+      "unicode": "e831",
+      "unicode_decimal": 59441
+    },
+    {
+      "icon_id": "8458760",
+      "name": "UI_icon2_事件1",
+      "font_class": "UI_icon_shijian",
+      "unicode": "e679",
+      "unicode_decimal": 59001
+    },
+    {
+      "icon_id": "10506202",
+      "name": "服务类型",
+      "font_class": "fuwuleixing",
+      "unicode": "e649",
+      "unicode_decimal": 58953
+    },
+    {
+      "icon_id": "11513828",
+      "name": "icon_单位",
+      "font_class": "icon_danwei",
+      "unicode": "e612",
+      "unicode_decimal": 58898
+    },
+    {
+      "icon_id": "30772379",
+      "name": "闹钟2",
+      "font_class": "naozhong1",
+      "unicode": "e66e",
+      "unicode_decimal": 58990
+    },
+    {
       "icon_id": "1727278",
       "name": "09安全、保障",
       "font_class": "anquanbaozhang",

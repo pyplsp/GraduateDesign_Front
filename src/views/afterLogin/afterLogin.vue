@@ -77,6 +77,11 @@
                         <span v-if="!ifAdministrator && !subAlarm">告警未订阅 <span class="el-icon-success" style="color: #ff5454"></span></span>
                     </div>
                 </el-card>
+                <div id="author">
+                    作者： PYPLSP <br />
+                    微信： pythegod <br />
+                    邮箱： 2505730605@qq.com
+                </div>
             </div>
         </div>
         <div id="content">
@@ -217,7 +222,6 @@ export default {
         color: white;
         padding: 10px;
         box-sizing: border-box;
-
     }
     .refresh{
         float: right;
@@ -225,6 +229,11 @@ export default {
     }
     .yes{
         float: right;
+    }
+    #author{
+        margin-top: 30px;
+        font-weight: initial;
+        font-size: 12px;
     }
     ::v-deep .el-col-12{
         width: 201px;
